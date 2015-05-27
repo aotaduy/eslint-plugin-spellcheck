@@ -1,4 +1,4 @@
-/* Initialze and export a valid spell checker
+/* Initialize and export a valid spell checker
 We use 'US'' as  default dictionaries
 */
 

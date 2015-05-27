@@ -8,7 +8,6 @@ module.exports = function(context) {
 
     return {
         'Identifier': function(aNode) {
-            console.log(aNode);
             if(!lodash.includes(skipWords, aNode.name)) {
                 var nodeWords = aNode.name.replace(/([A-Z])/g, ' $1').replace(/[^a-zA-Z ]/g, ' ').split(' ');
                 nodeWords = nodeWords.filter(function(aWord) {
