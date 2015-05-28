@@ -5,9 +5,9 @@ We use 'US'' as  default dictionaries
 var Spellchecker = require('hunspell-spellchecker');
 var fs = require('fs');
 var spellchecker = new Spellchecker();
-var DICT = spellchecker.parse({
+var dictionary = spellchecker.parse({
     aff: fs.readFileSync(__dirname + '/dicts/en_US.aff'),
     dic: fs.readFileSync(__dirname + '/dicts/en_US.dic')
 });
-spellchecker.use(DICT);
+spellchecker.use(dictionary);
 module.exports = spellchecker;
