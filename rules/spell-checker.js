@@ -1,12 +1,21 @@
-var skipWords = require('./utils/skipwords'),
-    lodash = require('lodash'),
+var  lodash = require('lodash'),
      fs = require('fs'),
      Spellchecker = require('hunspell-spellchecker'),
      spell = new Spellchecker(),
      dictionary = spell.parse({
         aff: fs.readFileSync(__dirname + '/utils/dicts/en_US.aff'),
         dic: fs.readFileSync(__dirname + '/utils/dicts/en_US.dic')
-    });
+    }),
+    globals = require('globals'),
+    skipWords = lodash.union(
+        lodash.keys(globals.builtin),
+        lodash.keys(globals.browser),
+        lodash.keys(globals.node),
+        lodash.keys(globals.mocha),
+        lodash.keys(globals.jasmine),
+        lodash.keys(globals.jquery),
+        lodash.keys(globals.shelljs)
+        );
 
 spell.use(dictionary);
 
@@ -51,7 +60,7 @@ module.exports = function(context) {
         }
     }
 
-    function checkIdentifier(aNode){
+    function checkIdentifier(aNode) {
         if(options.identifiers) {
             checkSpelling(aNode, aNode.name, 'Identifier');
         }
