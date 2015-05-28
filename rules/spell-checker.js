@@ -1,4 +1,4 @@
-var  lodash = require('lodash'),
+var lodash = require('lodash'),
      fs = require('fs'),
      Spellchecker = require('hunspell-spellchecker'),
      spell = new Spellchecker(),
