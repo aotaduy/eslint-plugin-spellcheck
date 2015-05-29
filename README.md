@@ -86,11 +86,3 @@ Check example below
             ]
        }
     ```
-
-## Rules
-
-| Name  | Description | Default Configuration |
-| ------------- | ------------- | ------------- |
-| spell-comments  | Check spelling inside js comments | 'spell-comments': 1 |
-| spell-strings | Check spelling on each word in strings | 'spell-strings': 1 |
-| spell-identifiers | Check spelling on identifiers, separatesd words if camelCased or snake_cased | 'spell-identifiers': 1 |
