@@ -1,6 +1,22 @@
 # eslint-plugin-spellcheck
 [eslint](http://eslint.org) plugin to spell check words on identifiers, Strings and comments of javascript files.
 
+## Configuration
+
+"comments": <<Boolean>> default: true
+Check Spelling inside comments
+
+"strings": <<Boolean>>, defualut: true
+Check Spelling inside comments
+
+"identifiers": <<Boolean>>, default: true
+Check Spelling inside identifiers
+
+"skipWords": <<Array Of Strings>> default: []
+Array of words that will not be checked.
+
+Check example below
+
 ## Usage in a project
 
 1. Install `eslint-plugin-spellcheck` as a dev-dependency:
@@ -17,11 +33,26 @@
     ```
 3. You can also configure these rules in your `.eslintrc`. All rules defined in this plugin have to be prefixed by 'spellcheck/'
 
-    ```yaml
-    plugins:
-      - spellcheck
-    rules:
-      - spellcheck/spell-strings: 0
+    ```json
+    "plugins": [
+       "spellcheck"
+   ],
+   "rules": {
+       "spell-checker": [1,
+           {
+               "comments": "true",
+               "strings": "true",
+               "identifiers": "true",
+               "skipWords": [
+                   "dict",
+                   "aff",
+                   "hunspellchecker",
+                   "hunspell",
+                   "utils"
+                ]
+                }
+            ]
+       }
     ```
 
 ## Usage globally
@@ -39,7 +70,20 @@
        "spellcheck"
    ],
    "rules": {
-       "spellcheck/spell-strings": 1
+       "spell-checker": [1,
+           {
+               "comments": "true",
+               "strings": "true",
+               "identifiers": "true",
+               "skipWords": [
+                   "dict",
+                   "aff",
+                   "hunspellchecker",
+                   "hunspell",
+                   "utils"
+                ]
+                }
+            ]
        }
     ```
 

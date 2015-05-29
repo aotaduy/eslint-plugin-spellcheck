@@ -1,7 +1,7 @@
 {
   "name": "eslint-plugin-spellcheck",
-  "version": "0.0.2",
-  "description": "ESLint rules for to spell check js files",
+  "version": "0.0.3",
+  "description": "ESLint rules to spell check js files",
   "main": "index.js",
   "repository": {
     "type": "git",
