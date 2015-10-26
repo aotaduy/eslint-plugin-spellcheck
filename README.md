@@ -3,10 +3,11 @@
 
 ## Configuration
 
+````
 "comments": <<Boolean>> default: true
 Check Spelling inside comments
 
-"strings": <<Boolean>>, defualut: true
+"strings": <<Boolean>>, default: true
 Check Spelling inside comments
 
 "identifiers": <<Boolean>>, default: true
@@ -14,6 +15,10 @@ Check Spelling inside identifiers
 
 "skipWords": <<Array Of Strings>> default: []
 Array of words that will not be checked.
+
+"skipIfMatch": <<Array Of Strings>> default: []
+Array of Regular Expressions that if matched will not be checked.
+````
 
 Check example below
 
@@ -38,7 +43,7 @@ Check example below
        "spellcheck"
    ],
    "rules": {
-       "spell-checker": [1,
+       "spellcheck/spell-checker": [1,
            {
                "comments": "true",
                "strings": "true",
@@ -49,10 +54,13 @@ Check example below
                    "hunspellchecker",
                    "hunspell",
                    "utils"
-                ]
-                }
-            ]
-       }
+               ],
+               "skipIfMatch": [
+                   "http://[^s]*"
+               ]
+            }
+        ]
+    }
     ```
 
 ## Usage globally
@@ -70,7 +78,7 @@ Check example below
        "spellcheck"
    ],
    "rules": {
-       "spell-checker": [1,
+       "spellcheck/spell-checker": [1,
            {
                "comments": "true",
                "strings": "true",
@@ -81,6 +89,9 @@ Check example below
                    "hunspellchecker",
                    "hunspell",
                    "utils"
+                ],
+                "skipIfMatch": [
+                    "http://[^s]*"
                 ]
                 }
             ]
