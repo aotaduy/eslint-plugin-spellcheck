@@ -19,7 +19,11 @@ eslintTester.addRuleTest('rules/spell-checker', {
         'var a = function testingCamelCase(each){};',
         'var a = RegExp',
         'var a = \'Hello how are you this is a string\'',
-        'var a = \'ArrayBuffer\''
+        'var a = \'ArrayBuffer\'',
+        {
+            code: 'var url = "http://examplus.com"',
+            args:[2, {skipWords: ['url'], skipIfMatch:['http://[^\s]*']}]
+        },
 
     ],
     invalid: [
@@ -49,6 +53,13 @@ eslintTester.addRuleTest('rules/spell-checker', {
             errors: [
                 { message: 'You have a misspelled word: tsih on Comment'},
                 { message: 'You have a misspelled word: srting on Comment'}]
+        },
+        {
+            code: 'var url = "http://examplus.com"',
+            args:[2, {skipWords: ['url']}],
+            errors: [
+                { message: 'You have a misspelled word: http on String'},
+                { message: 'You have a misspelled word: examplus on String'}]
         },
         {
             code: 'var a = 1 /* tsih is a comment srting Block */ ',

@@ -25,13 +25,14 @@ module.exports = function(context) {
         comments: true,
         strings: true,
         identifiers: true,
-        skipWords: []
+        skipWords: [],
+        skipIfMatch: []
     },
     options = lodash.assign(defaultOptions, context.options[0]);
     options.skipWords = lodash.union(options.skipWords, skipWords);
 
     function checkSpelling(aNode, value, spellingType) {
-        if(!lodash.includes(options.skipWords, value)) {
+        if(!hasToSkip(value)) {
             var nodeWords = value.replace(/[^a-zA-Z ]/g, ' ').replace(/([A-Z])/g, ' $1').split(' ');
             nodeWords
                 .filter(function(aWord) {
@@ -65,6 +66,14 @@ module.exports = function(context) {
             checkSpelling(aNode, aNode.name, 'Identifier');
         }
     }
+    /* Returns true if the string in value has to be skipped for spell checking */
+    function hasToSkip(value) {
+        return lodash.includes(options.skipWords, value) ||
+            lodash.find(options.skipIfMatch, function (aPattern) {
+                return value.match(aPattern);
+            });
+    }
+
     return {
         'BlockComment': checkComment,
         'LineComment': checkComment,
