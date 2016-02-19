@@ -30,11 +30,14 @@ module.exports = function(context) {
         skipIfMatch: []
     },
     options = lodash.assign(defaultOptions, context.options[0]);
-    options.skipWords = lodash.union(options.skipWords, skipWords);
+    options.skipWords = lodash.union(options.skipWords, skipWords)
+        .map(function (string) {
+            return string.toLowerCase();
+        });
 
     function checkSpelling(aNode, value, spellingType) {
         if(!hasToSkip(value)) {
-            var nodeWords = value.replace(/[^a-zA-Z ]/g, ' ').replace(/([A-Z])/g, ' $1').split(' ');
+            var nodeWords = value.replace(/[^a-zA-Z ]/g, ' ').replace(/([A-Z])/g, ' $1').toLowerCase().split(' ');
             nodeWords
                 .filter(function(aWord) {
                 return !lodash.includes(options.skipWords, aWord) && !spell.check(aWord);
@@ -61,7 +64,6 @@ module.exports = function(context) {
             checkSpelling(aNode, aNode.value, 'String');
         }
     }
-    
     function checkTemplateElement(aNode){
         if(options.templates && typeof aNode.value.raw === 'string') {
             checkSpelling(aNode, aNode.value.raw, 'Template');
