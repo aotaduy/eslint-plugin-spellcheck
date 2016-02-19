@@ -25,6 +25,7 @@ module.exports = function(context) {
         comments: true,
         strings: true,
         identifiers: true,
+        templates: true,
         skipWords: [],
         skipIfMatch: []
     },
@@ -60,6 +61,12 @@ module.exports = function(context) {
             checkSpelling(aNode, aNode.value, 'String');
         }
     }
+    
+    function checkTemplateElement(aNode){
+        if(options.templates && typeof aNode.value.raw === 'string') {
+            checkSpelling(aNode, aNode.value.raw, 'Template');
+        }
+    }
 
     function checkIdentifier(aNode) {
         if(options.identifiers) {
@@ -78,6 +85,7 @@ module.exports = function(context) {
         'BlockComment': checkComment,
         'LineComment': checkComment,
         'Literal': checkLiteral,
+        'TemplateElement': checkTemplateElement,
         'Identifier': checkIdentifier
     };
 

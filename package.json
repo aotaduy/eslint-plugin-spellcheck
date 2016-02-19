@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-spellcheck",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "ESLint rules to spell check js files",
   "main": "index.js",
   "repository": {

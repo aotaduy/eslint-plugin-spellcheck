@@ -13,6 +13,10 @@ Check Spelling inside comments
 "identifiers": <<Boolean>>, default: true
 Check Spelling inside identifiers
 
+"templates": <<Boolean>>, default: true
+Check Spelling inside ES6 templates you should enable parser options for ES6 features for this to work
+Refer to: [specifying-parser-options](http://eslint.org/docs/user-guide/configuring#specifying-parser-options)
+
 "skipWords": <<Array Of Strings>> default: []
 Array of words that will not be checked.
 
