@@ -10,6 +10,7 @@
                     comments: true,
                     strings: true,
                     identifiers: true,
+                    lang: 'en_US',
                     skipWords: [
                         'dict',
                         'aff',
