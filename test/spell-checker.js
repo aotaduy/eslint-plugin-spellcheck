@@ -80,7 +80,7 @@ eslintTester.addRuleTest('rules/spell-checker', {
                 { message: 'You have a misspelled word: srting on String'}]
         },
         {
-            code: 'var a = 1 // colour cheque behavior tsih',
+            code: 'var a = 1 // colour cheque behaviour tsih',
             args:[2, {lang: 'en_GB', skipWords: ['dict']}],
             errors: [
                 { message: 'You have a misspelled word: tsih on Comment'}]
