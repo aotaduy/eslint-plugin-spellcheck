@@ -2,10 +2,7 @@ var lodash = require('lodash'),
      fs = require('fs'),
      Spellchecker = require('hunspell-spellchecker'),
      spell = new Spellchecker(),
-     dictionary = spell.parse({
-        aff: fs.readFileSync(__dirname + '/utils/dicts/en_US.aff'),
-        dic: fs.readFileSync(__dirname + '/utils/dicts/en_US.dic')
-    }),
+     dictionary,
     globals = require('globals'),
     skipWords = lodash.union(
         lodash.keys(globals.builtin),
@@ -17,8 +14,6 @@ var lodash = require('lodash'),
         lodash.keys(globals.shelljs)
         );
 
-spell.use(dictionary);
-
 module.exports = function(context) {
     'use strict';
     var defaultOptions = {
@@ -29,7 +24,16 @@ module.exports = function(context) {
         skipWords: [],
         skipIfMatch: []
     },
-    options = lodash.assign(defaultOptions, context.options[0]);
+    options = lodash.assign(defaultOptions, context.options[0]),
+    lang = options.lang || 'en_US';
+
+    dictionary = spell.parse({
+      aff: fs.readFileSync(__dirname + '/utils/dicts/' + lang + '.aff'),
+      dic: fs.readFileSync(__dirname + '/utils/dicts/' + lang + '.dic')
+    });
+
+    spell.use(dictionary);
+
     options.skipWords = lodash.union(options.skipWords, skipWords)
         .map(function (string) {
             return string.toLowerCase();
