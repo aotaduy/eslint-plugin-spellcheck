@@ -8,7 +8,7 @@
 Check Spelling inside comments
 
 "strings": <<Boolean>>, default: true
-Check Spelling inside comments
+Check Spelling inside strings
 
 "identifiers": <<Boolean>>, default: true
 Check Spelling inside identifiers
@@ -16,6 +16,9 @@ Check Spelling inside identifiers
 "templates": <<Boolean>>, default: true
 Check Spelling inside ES6 templates you should enable parser options for ES6 features for this to work
 Refer to: [specifying-parser-options](http://eslint.org/docs/user-guide/configuring#specifying-parser-options)
+
+"lang": <<String>>, default: "en_US"
+Choose the language you want to use. Options are: "en_US", "en_CA", and "en_GB"
 
 "skipWords": <<Array Of Strings>> default: []
 Array of words that will not be checked.
@@ -49,9 +52,10 @@ Check example below
    "rules": {
        "spellcheck/spell-checker": [1,
            {
-               "comments": "true",
-               "strings": "true",
-               "identifiers": "true",
+               "comments": true,
+               "strings": true,
+               "identifiers": true,
+               "lang": "en_US",
                "skipWords": [
                    "dict",
                    "aff",
@@ -84,9 +88,10 @@ Check example below
    "rules": {
        "spellcheck/spell-checker": [1,
            {
-               "comments": "true",
-               "strings": "true",
-               "identifiers": "true",
+               "comments": true,
+               "strings": true,
+               "identifiers": true,
+               "lang": "en_US",
                "skipWords": [
                    "dict",
                    "aff",
@@ -97,7 +102,7 @@ Check example below
                 "skipIfMatch": [
                     "http://[^s]*"
                 ]
-                }
-            ]
-       }
+            }
+        ]
+   }
     ```
