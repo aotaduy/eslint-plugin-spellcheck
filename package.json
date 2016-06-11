@@ -7,6 +7,9 @@
     "type": "git",
     "url": "https://github.com/aotaduy/eslint-plugin-spellcheck.git"
   },
+  "scripts": {
+    "test": "mocha"
+  },
   "author": "Andres Otaduy",
   "license": "MIT",
   "bugs": {

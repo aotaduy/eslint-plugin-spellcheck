@@ -41,7 +41,9 @@ module.exports = function(context) {
 
     function checkSpelling(aNode, value, spellingType) {
         if(!hasToSkip(value)) {
-            var nodeWords = value.replace(/[^a-zA-Z ]/g, ' ').replace(/([A-Z])/g, ' $1').toLowerCase().split(' ');
+            var nodeWords = value
+                .replace(/\b([A-Z][A-Z0-9_]*)\b/g, function(s) { return s.toLowerCase().split('_'); })
+                .replace(/[^a-zA-Z ]/g, ' ').replace(/([A-Z])/g, ' $1').toLowerCase().split(' ');
             nodeWords
                 .filter(function(aWord) {
                 return !lodash.includes(options.skipWords, aWord) && !spell.check(aWord);
