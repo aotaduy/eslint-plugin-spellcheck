@@ -24,6 +24,9 @@ eslintTester.addRuleTest('rules/spell-checker', {
             code: 'var url = "http://examplus.com"',
             args:[2, {skipWords: ['url'], skipIfMatch:['http://[^\s]*']}]
         },
+        'var MY_ACTION = "MY_ACTION"',
+        'var MY_ACTION2 = "MY_ACTION2"',
+        'var a = 1 // This is MY_ACTION',
 
     ],
     invalid: [
@@ -91,6 +94,23 @@ eslintTester.addRuleTest('rules/spell-checker', {
             errors: [
                 { message: 'You have a misspelled word: color on Comment'},
                 { message: 'You have a misspelled word: behavior on Comment'}]
+        },
+        {
+            code: 'var MY_ACTOIN = "MY_ATCION"',
+            errors: [
+                { message: 'You have a misspelled word: actoin on Identifier'},
+                { message: 'You have a misspelled word: atcion on String'}]
+        },
+        {
+            code: 'var MY_ACTOIN2 = "MY_ATCION2"',
+            errors: [
+                { message: 'You have a misspelled word: actoin on Identifier'},
+                { message: 'You have a misspelled word: atcion on String'}]
+        },
+        {
+            code: 'var a = 1 // This is MY_ACTOIN',
+            errors: [
+                { message: 'You have a misspelled word: actoin on Comment'}]
         }
 
     ]
