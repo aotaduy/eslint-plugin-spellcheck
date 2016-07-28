@@ -15,6 +15,13 @@ var lodash = require('lodash'),
         );
 
 module.exports = function(context) {
+    console.log(context.options);
+    /*
+    if a key is a node type, ESLint calls that visitor function while going down the tree
+    if a key is a node type plus :exit, ESLint calls that visitor function while going up the tree
+    if a key is an event name, ESLint calls that handler function for code path analysis
+    */
+
     'use strict';
     var defaultOptions = {
         comments: true,

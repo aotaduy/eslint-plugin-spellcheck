@@ -13,10 +13,14 @@
     "url": "https://github.com/aotaduy/eslint-plugin-spellcheck/issues"
   },
   "homepage": "https://github.com/sotaduy/eslint-plugin-spellcheck",
+  "scripts": {
+    "test": "gulp",
+    "lint": "eslint -c .eslintrc.json rules/*.js"
+  },
   "dependencies": {
-      "globals": "^9.9.0",
-      "hunspell-spellchecker": "^1.0.2",
-      "lodash": "^4.14.0"
+    "globals": "^9.9.0",
+    "hunspell-spellchecker": "^1.0.2",
+    "lodash": "^4.14.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
@@ -24,7 +28,6 @@
     "eslint": "^3.1.1",
     "eslint-tester": "^0.8.2",
     "gulp": "^3.9.1",
-    "gulp-eslint": "^3.0.1",
     "gulp-istanbul": "1.0.0",
     "gulp-mocha": "^2.2.0",
     "istanbul": "^0.4.4",
