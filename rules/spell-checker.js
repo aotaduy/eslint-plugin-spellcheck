@@ -1,9 +1,13 @@
+// Native modules
+var fs = require('fs');
+
+// 3rd party dependencies
 var lodash = require('lodash'),
-     fs = require('fs'),
-     Spellchecker = require('hunspell-spellchecker'),
-     spell = new Spellchecker(),
-     dictionary,
-    globals = require('globals'),
+    Spellchecker = require('hunspell-spellchecker'),
+    globals = require('globals');
+
+var spell = new Spellchecker(),
+    dictionary,
     skipWords = lodash.union(
         lodash.keys(globals.builtin),
         lodash.keys(globals.browser),
@@ -12,7 +16,7 @@ var lodash = require('lodash'),
         lodash.keys(globals.jasmine),
         lodash.keys(globals.jquery),
         lodash.keys(globals.shelljs)
-        );
+    );
 
 module.exports = {
     // meta (object) contains metadata for the rule:
@@ -83,6 +87,7 @@ module.exports = {
 
     // create (function) returns an object with methods that ESLint calls to “visit” nodes while traversing the abstract syntax tree (AST as defined by ESTree) of JavaScript code:
     create: function(context) {
+        console.log('context.options:');
         console.log(context.options);
         /*
         if a key is a node type, ESLint calls that visitor function while going down the tree
