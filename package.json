@@ -14,22 +14,22 @@
   },
   "homepage": "https://github.com/sotaduy/eslint-plugin-spellcheck",
   "dependencies": {
-      "globals": "^6.4.1",
-      "hunspell-spellchecker": "^1.0.0",
-      "lodash": "^3.3.1"
+      "globals": "^9.9.0",
+      "hunspell-spellchecker": "^1.0.2",
+      "lodash": "^4.14.0"
   },
   "devDependencies": {
-    "chai": "^1.10.0",
-    "coveralls": "^2.11.2",
-    "eslint": "^0.13.0",
-    "eslint-tester": "^0.5.0",
-    "gulp": "^3.8.10",
-    "gulp-eslint": "^0.3.0",
-    "gulp-istanbul": "0.6.0",
-    "gulp-mocha": "^2.0.0",
-    "istanbul": "^0.3.5",
-    "mocha": "2.1.0",
-    "shelljs": "^0.3.0",
+    "chai": "^3.5.0",
+    "coveralls": "^2.11.12",
+    "eslint": "^3.1.1",
+    "eslint-tester": "^0.8.2",
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^3.0.1",
+    "gulp-istanbul": "1.0.0",
+    "gulp-mocha": "^2.2.0",
+    "istanbul": "^0.4.4",
+    "mocha": "2.5.3",
+    "shelljs": "^0.7.3",
     "shelljs-nodecli": "^0.1.1"
   },
   "peerDependencies": {
