@@ -2,15 +2,15 @@
 // Requirements
 //------------------------------------------------------------------------------
 
-var eslint = require('../node_modules/eslint/lib/eslint'),
-    ESLintTester = require('eslint-tester');
+var rule = require('../rules/spell-checker'),
+    RuleTester = require('eslint').RuleTester;
 
 //------------------------------------------------------------------------------
 // Tests
 //------------------------------------------------------------------------------
 
-var eslintTester = new ESLintTester(eslint);
-eslintTester.addRuleTest('rules/spell-checker', {
+var ruleTester = new RuleTester();
+ruleTester.run('spellcheck/spell-checker', rule, {
     valid: [
         'var a = 1 // This is a comment',
         'var a = 2 /* This is a Block Comment */',
