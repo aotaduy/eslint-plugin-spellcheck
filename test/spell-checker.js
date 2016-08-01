@@ -22,41 +22,41 @@ ruleTester.run('spellcheck/spell-checker', rule, {
         'var a = \'ArrayBuffer\'',
         {
             code: 'var url = "http://examplus.com"',
-            args:[2, {skipWords: ['url'], skipIfMatch:['http://[^\s]*']}]
+            options:[{skipWords: ['url'], skipIfMatch:['http://[^\s]*']}]
         },
 
     ],
     invalid: [
         {
             code: 'var a = 1 // tsih is a comment srting dict',
-            args:[2, {skipWords: ['dict']}],
+            options:[{skipWords: ['dict']}],
             errors: [
                 { message: 'You have a misspelled word: tsih on Comment'},
                 { message: 'You have a misspelled word: srting on Comment'}]
         },
         {
             code: 'var ajhasd = \'liasdfuhn\' // tsih is a comment srting dict',
-            args:[2, {strings: false, identifiers: false, skipWords: ['dict']}],
+            options:[{strings: false, identifiers: false, skipWords: ['dict']}],
             errors: [
                 { message: 'You have a misspelled word: tsih on Comment'},
                 { message: 'You have a misspelled word: srting on Comment'}]
         },
         {
             code: 'var a = \'liasdfuhn\' // tsih is a comment srting dict',
-            args:[2, {comments: false, strings: true, skipWords: ['dict']}],
+            options:[{comments: false, strings: true, skipWords: ['dict']}],
             errors: [
                 { message: 'You have a misspelled word: liasdfuhn on String'}]
         },
         {
             code: 'var a = 1 // tsih is a comment srting dict',
-            args:[2, {skipWords: ['dict']}],
+            options:[{skipWords: ['dict']}],
             errors: [
                 { message: 'You have a misspelled word: tsih on Comment'},
                 { message: 'You have a misspelled word: srting on Comment'}]
         },
         {
             code: 'var url = "http://examplus.com"',
-            args:[2, {skipWords: ['url']}],
+            options:[{skipWords: ['url']}],
             errors: [
                 { message: 'You have a misspelled word: http on String'},
                 { message: 'You have a misspelled word: examplus on String'}]
@@ -81,13 +81,13 @@ ruleTester.run('spellcheck/spell-checker', rule, {
         },
         {
             code: 'var a = 1 // colour cheque behaviour tsih',
-            args:[2, {lang: 'en_GB', skipWords: ['dict']}],
+            options:[{lang: 'en_GB', skipWords: ['dict']}],
             errors: [
                 { message: 'You have a misspelled word: tsih on Comment'}]
         },
         {
             code: 'var a = 1 // color is a comment behavior dict',
-            args:[2, {lang: 'en_GB', skipWords: ['dict']}],
+            options:[{lang: 'en_GB', skipWords: ['dict']}],
             errors: [
                 { message: 'You have a misspelled word: color on Comment'},
                 { message: 'You have a misspelled word: behavior on Comment'}]

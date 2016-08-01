@@ -87,8 +87,6 @@ module.exports = {
 
     // create (function) returns an object with methods that ESLint calls to “visit” nodes while traversing the abstract syntax tree (AST as defined by ESTree) of JavaScript code:
     create: function(context) {
-        console.log('context.options:');
-        console.log(context.options);
         /*
         if a key is a node type, ESLint calls that visitor function while going down the tree
         if a key is a node type plus :exit, ESLint calls that visitor function while going up the tree
