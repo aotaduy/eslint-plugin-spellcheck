@@ -20,17 +20,17 @@
   "dependencies": {
     "globals": "^9.9.0",
     "hunspell-spellchecker": "^1.0.2",
-    "lodash": "^4.14.0"
+    "lodash": "^4.14.2"
   },
   "devDependencies": {
     "chai": "^3.5.0",
     "coveralls": "^2.11.12",
-    "eslint": "^3.1.1",
+    "eslint": "^3.2.2",
     "gulp": "^3.9.1",
     "gulp-istanbul": "1.0.0",
-    "gulp-mocha": "^2.2.0",
+    "gulp-mocha": "^3.0.0",
     "istanbul": "^0.4.4",
-    "mocha": "2.5.3",
+    "mocha": "3.0.2",
     "shelljs": "^0.7.3",
     "shelljs-nodecli": "^0.1.1"
   },
