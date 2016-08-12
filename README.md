@@ -25,6 +25,7 @@ Array of words that will not be checked.
 
 "skipIfMatch": <<Array Of Strings>> default: []
 Array of Regular Expressions that if matched will not be checked.
+i.e: "^[-\\w]+\/[-\\w\\.]+$" will ignore MIME types.
 ````
 
 Check example below
@@ -64,7 +65,8 @@ Check example below
                    "utils"
                ],
                "skipIfMatch": [
-                   "http://[^s]*"
+                   "http://[^s]*",
+                    "^[-\\w]+\/[-\\w\\.]+$" //For MIME Types
                ]
             }
         ]
