@@ -119,11 +119,17 @@ module.exports = {
 
         function checkSpelling(aNode, value, spellingType) {
             if(!hasToSkip(value)) {
-                var nodeWords = value.replace(/[^a-zA-Z ]/g, ' ').replace(/([A-Z])/g, ' $1').toLowerCase().split(' ');
+                var nodeWords = value.replace(/[^0-9a-zA-Z ']/g, ' ').replace(/([A-Z])/g, ' $1').toLowerCase().split(' ');
                 nodeWords
                     .filter(function(aWord) {
                     return !lodash.includes(options.skipWords, aWord) && !spell.check(aWord);
                 })
+                    .filter(function(aWord) { // Split words by numbers for special cases such as test12anything78variable and to include 2nd and 3rd ordinals
+                        var splitByNumberWords = aWord.replace(/[0-9']/g, ' ').replace(/([A-Z])/g, ' $1').toLowerCase().split(' ');
+                        return splitByNumberWords.some(function (aWord) {
+                            return !lodash.includes(options.skipWords, aWord) && !spell.check(aWord);
+                        });
+                    })
                     .forEach(function(aWord) {
                         context.report(
                             aNode,

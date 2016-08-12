@@ -13,6 +13,8 @@ var ruleTester = new RuleTester();
 ruleTester.run('spellcheck/spell-checker', rule, {
     valid: [
         'var a = 1 // This is a comment',
+        'var this2 = 1 // This shouldn\'t fail, not the first or the 2nd time',
+        'var test12anything78variable = 1 // This shouldn\'t fail, not the first or the 3rd time',
         'var a = 2 /* This is a Block Comment */',
         'var a = 2 //Array',
         'var angular = thisIsATest(of_a_snake_case)',
@@ -66,6 +68,12 @@ ruleTester.run('spellcheck/spell-checker', rule, {
             errors: [
                 { message: 'You have a misspelled word: tsih on Comment'},
                 { message: 'You have a misspelled word: srting on Comment'}]
+        },
+        {
+            code: 'var test12anthing78variable = 1 // This shuldn\'t fail, not the first or the 3rd time ',
+            errors: [
+                { message: 'You have a misspelled word: test12anthing78variable on Identifier'},
+                { message: 'You have a misspelled word: shuldn\'t on Comment'}]
         },
         {
             code: 'var angular = tsihIsATest(of_a_snake_case_srting)',
