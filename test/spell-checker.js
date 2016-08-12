@@ -9,7 +9,12 @@ var rule = require('../rules/spell-checker'),
 // Tests
 //------------------------------------------------------------------------------
 
-var ruleTester = new RuleTester();
+var ruleTester = new RuleTester({
+    env: {
+        'es6': true
+    }
+});
+
 ruleTester.run('spellcheck/spell-checker', rule, {
     valid: [
         'var a = 1 // This is a comment',
@@ -18,8 +23,11 @@ ruleTester.run('spellcheck/spell-checker', rule, {
         'var a = 2 /* This is a Block Comment */',
         'var a = 2 //Array',
         'var angular = thisIsATest(of_a_snake_case)',
+        'var a = new RegExp(`\^Card\\sreader\\xAAnot\\uFFFFconnected\\sin\\s${ numberOfSeconds }s\\.`);',
+        'var a = new RegExp(`\^Card\\sreader\\snot\\sconnected\\sin\\s${ numberOfSeconds }s\\.`);',
         'var a = function testingCamelCase(each){};',
         'var a = RegExp',
+        'var a = "January"',
         'var a = \'Hello how are you this is a string\'',
         'var a = \'ArrayBuffer\'',
         {

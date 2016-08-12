@@ -119,12 +119,17 @@ module.exports = {
 
         function checkSpelling(aNode, value, spellingType) {
             if(!hasToSkip(value)) {
-                var nodeWords = value.replace(/[^0-9a-zA-Z ']/g, ' ').replace(/([A-Z])/g, ' $1').toLowerCase().split(' ');
+                // Regular expression matches regexp metacharacters, and any special char
+                var regexp = /(\\[sSwdDB0nfrtv])|\\[0-7][0-7][0-7]|\\x[0-9A-F][0-9A-F]|\\u[0-9A-F][0-9A-F][0-9A-F][0-9A-F]|[^0-9a-zA-Z ']/g,
+                    nodeWords = value.replace(regexp, ' ')
+                        .replace(/([A-Z])/g, ' $1').split(' ');
                 nodeWords
                     .filter(function(aWord) {
-                    return !lodash.includes(options.skipWords, aWord) && !spell.check(aWord);
-                })
-                    .filter(function(aWord) { // Split words by numbers for special cases such as test12anything78variable and to include 2nd and 3rd ordinals
+                        return !lodash.includes(options.skipWords, aWord) && !spell.check(aWord);
+                    })
+                    .filter(function(aWord) {
+                      // Split words by numbers for special cases such as test12anything78variable and to include 2nd and 3rd ordinals
+                      // also for Proper names we convert to lower case in second pass.
                         var splitByNumberWords = aWord.replace(/[0-9']/g, ' ').replace(/([A-Z])/g, ' $1').toLowerCase().split(' ');
                         return splitByNumberWords.some(function (aWord) {
                             return !lodash.includes(options.skipWords, aWord) && !spell.check(aWord);
@@ -133,13 +138,13 @@ module.exports = {
                     .forEach(function(aWord) {
                         context.report(
                             aNode,
-                            'You have a misspelled word: {{word}} on {{spellingType}}',
-                            { word: aWord,
-                                spellingType: spellingType}
-                        );
-                });
+                            'You have a misspelled word: {{word}} on {{spellingType}}', {
+                              word: aWord,
+                              spellingType: spellingType
+                        });
+                    });
+                }
             }
-        }
 
         function checkComment(aNode) {
             if(options.comments) {
