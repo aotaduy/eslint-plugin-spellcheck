@@ -1,27 +1,8 @@
 (function () {
    'use strict';
    var gulp = require('gulp'),
-		eslint = require('gulp-eslint'),
 		istanbul = require('gulp-istanbul'),
 		mocha = require('gulp-mocha');
-
-	gulp.task('quality', function() {
-
-		gulp.src(['rules/*.js'])
-			.pipe(eslint({
-				rules: {
-					'no-console': 0,
-					'quotes': [2, 'single']
-				},
-				globals: {
-					'require': false,
-					'module': false,
-					'console': false,
-					'process': true
-				}
-			}))
-			.pipe(eslint.format());
-	});
 
 	gulp.task('test', function (cb) {
 		gulp.src(['rules/*.js'])
@@ -35,5 +16,5 @@
 		});
 	});
 
-	gulp.task('default', ['quality', 'test']);
+	gulp.task('default', ['test']);
 }());

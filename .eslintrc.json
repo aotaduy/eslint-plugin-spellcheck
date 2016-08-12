@@ -1,0 +1,15 @@
+{
+  "rules": {
+    "no-console": 0,
+    "quotes": [
+      2,
+      "single"
+    ]
+  },
+  "globals": {
+    "require": false,
+    "module": false,
+    "console": false,
+    "process": true
+  }
+}
