@@ -1,6 +1,6 @@
 # eslint-plugin-spellcheck
 [eslint](http://eslint.org) plugin to spell check words on identifiers, Strings and comments of javascript files.
-
+[![dependencies Status](https://david-dm.org/aotaduy/eslint-plugin-spellcheck/status.svg)](https://david-dm.org/aotaduy/eslint-plugin-spellcheck)
 ## Configuration
 
 ````
