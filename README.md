@@ -44,7 +44,7 @@ Check example below
     plugins:
       - spellcheck
     ```
-3. You can also configure these rules in your `.eslintrc`. All rules defined in this plugin have to be prefixed by 'spellcheck/'
+3. You can also configure these rules in your `.eslintrc`. All rules defined in this plugin have to be prefixed by 'spellcheck/' 
 
     ```json
     "plugins": [
