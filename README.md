@@ -4,6 +4,8 @@
 [![Build Status](https://travis-ci.org/aotaduy/eslint-plugin-spellcheck.svg?branch=master)](https://travis-ci.org/aotaduy/eslint-plugin-spellcheck)
 ## Configuration
 
+ This ESLint plugin, like others, can be reconfigured to produce errors (2), warnings (1), or disabled (0) with the first numeric argument.  For more information on ESLint configuration, see: http://eslint.org/docs/user-guide/configuring
+ 
 ````
 "comments": <<Boolean>> default: true
 Check Spelling inside comments
