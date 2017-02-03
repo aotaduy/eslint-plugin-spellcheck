@@ -27,7 +27,7 @@ Choose the language you want to use. Options are: "en_US", "en_CA", and "en_GB"
 Array of words that will not be checked.
 
 "skipIfMatch": <<Array Of Strings>> default: []
-Array of Regular Expressions that if matched will not be checked.
+Array of Regular Expressions the plugin will try to match the js node element value (identifier, comment, string, string template, etc) and will not check the entire node content if matched, be careful in comments because if a part of the comment is matched the entire comment will not be checked, same for strings.
 i.e: "^[-\\w]+\/[-\\w\\.]+$" will ignore MIME types.
 ````
 
