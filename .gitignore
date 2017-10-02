@@ -25,6 +25,11 @@ build/Release
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git-
 node_modules
 
+# package-lock of npm >= 5.0.0
+# Should not be included for libraries
+# https://github.com/yarnpkg/yarn/issues/1583
+package-lock.json
+
 # Users Environment Variables
 .lock-wscript
 
