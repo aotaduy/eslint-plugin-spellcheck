@@ -15,7 +15,10 @@ var spell = new Spellchecker(),
         lodash.keys(globals.mocha),
         lodash.keys(globals.jasmine),
         lodash.keys(globals.jquery),
-        lodash.keys(globals.shelljs)
+        lodash.keys(globals.shelljs),
+        Object.getOwnPropertyNames(String.prototype),
+        Object.getOwnPropertyNames(JSON),
+        Object.getOwnPropertyNames(Math)
     );
 
 module.exports = {

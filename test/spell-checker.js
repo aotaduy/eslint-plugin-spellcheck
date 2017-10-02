@@ -30,6 +30,9 @@ ruleTester.run('spellcheck/spell-checker', rule, {
         'var a = "January"',
         'var a = \'Hello how are you this is a string\'',
         'var a = \'ArrayBuffer\'',
+        'var a = \'foobar\'.substring(0,1)',
+        'var a = JSON.stringify({})',
+        'var a = Math.trunc(-0.1)',
         {
             code: 'var url = "http://examplus.com"',
             options:[{skipWords: ['url'], skipIfMatch:['http://[^\s]*']}]
