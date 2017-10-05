@@ -80,6 +80,10 @@ module.exports = {
                     skipIfMatch: {
                         type: 'array',
                         default: []
+                    },
+                    minLength: {
+                        type: 'number',
+                        default: 1
                     }
                 },
                 additionalProperties: false
@@ -103,7 +107,8 @@ module.exports = {
             identifiers: true,
             templates: true,
             skipWords: [],
-            skipIfMatch: []
+            skipIfMatch: [],
+            minLength: 1
         },
         options = lodash.assign(defaultOptions, context.options[0]),
         lang = options.lang || 'en_US';
@@ -173,6 +178,7 @@ module.exports = {
         }
         /* Returns true if the string in value has to be skipped for spell checking */
         function hasToSkip(value) {
+            if(value.length < options.minLength) return true;
             return lodash.includes(options.skipWords, value) ||
                 lodash.find(options.skipIfMatch, function (aPattern) {
                     return value.match(aPattern);

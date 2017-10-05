@@ -37,7 +37,10 @@ ruleTester.run('spellcheck/spell-checker', rule, {
             code: 'var url = "http://examplus.com"',
             options:[{skipWords: ['url'], skipIfMatch:['http://[^\s]*']}]
         },
-
+        {
+            code: 'var el = "myElement"',
+            options:[{minLength: 3}]
+        }
     ],
     invalid: [
         {
@@ -93,6 +96,12 @@ ruleTester.run('spellcheck/spell-checker', rule, {
                 { message: 'You have a misspelled word: srting on Identifier'}]
         },
         {
+            code: 'var el = "myElement"',
+            errors: [
+                { message: 'You have a misspelled word: el on Identifier'}
+            ]
+        },
+        {
             code: 'var a = \'Hello tsih is a srting\'',
             errors: [
                 { message: 'You have a misspelled word: tsih on String'},
@@ -111,6 +120,5 @@ ruleTester.run('spellcheck/spell-checker', rule, {
                 { message: 'You have a misspelled word: color on Comment'},
                 { message: 'You have a misspelled word: behavior on Comment'}]
         }
-
     ]
 });
