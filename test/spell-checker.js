@@ -38,8 +38,12 @@ ruleTester.run('spellcheck/spell-checker', rule, {
             options:[{skipWords: ['url'], skipIfMatch:['http://[^\s]*']}]
         },
         {
-            code: 'var el = "myElement"',
-            options:[{minLength: 3}]
+            code: 'var myOrmFunctions = "myElement"',
+            options:[{minLength: 4}]
+        },
+        {
+            code: 'var myOrmFunctions = "myElement"',
+            options:[{skipWordIfMatch: ['^.{1,3}$']}]
         }
     ],
     invalid: [
@@ -97,8 +101,16 @@ ruleTester.run('spellcheck/spell-checker', rule, {
         },
         {
             code: 'var el = "myElement"',
+            options:[{minLength: 2}],
             errors: [
                 { message: 'You have a misspelled word: el on Identifier'}
+            ]
+        },
+        {
+            code: 'var myOrmFunctions = "myElement"',
+            options:[{skipWordIfMatch: ['^.{1,2}$']}],
+            errors: [
+                { message: 'You have a misspelled word: Orm on Identifier'}
             ]
         },
         {

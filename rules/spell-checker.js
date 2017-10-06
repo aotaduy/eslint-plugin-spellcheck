@@ -81,6 +81,10 @@ module.exports = {
                         type: 'array',
                         default: []
                     },
+                    skipWordIfMatch: {
+                        type: 'array',
+                        default: []
+                    },
                     minLength: {
                         type: 'number',
                         default: 1
@@ -108,6 +112,7 @@ module.exports = {
             templates: true,
             skipWords: [],
             skipIfMatch: [],
+            skipWordIfMatch: [],
             minLength: 1
         },
         options = lodash.assign(defaultOptions, context.options[0]),
@@ -135,6 +140,7 @@ module.exports = {
                         .replace(/([A-Z])/g, ' $1').split(' '),
                     errors;
                 errors = nodeWords
+                    .filter(hasToSkipWord)
                     .filter(isSpellingError)
                     .filter(function(aWord) {
                       // Split words by numbers for special cases such as test12anything78variable and to include 2nd and 3rd ordinals
@@ -178,11 +184,25 @@ module.exports = {
         }
         /* Returns true if the string in value has to be skipped for spell checking */
         function hasToSkip(value) {
-            if(value.length < options.minLength) return true;
             return lodash.includes(options.skipWords, value) ||
                 lodash.find(options.skipIfMatch, function (aPattern) {
                     return value.match(aPattern);
                 });
+        }
+
+        /**
+         * returns false if the word has to be skipped
+         * @param  {string}  word
+         * @return {Boolean} false if skip; true if not
+         */
+        function hasToSkipWord(word) {
+            if(word.length < options.minLength) return false;
+            if(lodash.find(options.skipWordIfMatch, function (aPattern) {
+                return word.match(aPattern);
+            })){
+                return false;
+            }
+            return true;
         }
 
         return {
