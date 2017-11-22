@@ -21,6 +21,11 @@ var spell = new Spellchecker(),
         Object.getOwnPropertyNames(Math)
     );
 
+// ESLint 3 had "eslint.version" in context. ESLint 4 does not have one.
+function isEslint4OrAbove(context) {
+  return !('eslint' in context);
+}
+
 module.exports = {
     // meta (object) contains metadata for the rule:
     meta: {
@@ -179,8 +184,21 @@ module.exports = {
                 });
         }
 
+        // Coverage exclusion only needed for ESLint<4
+        /* istanbul ignore next */
+        if (isEslint4OrAbove(context)) {
+          context
+            .getSourceCode()
+            .getAllComments()
+            .forEach(function (commentNode) {
+              checkComment(commentNode);
+            });
+        }
+
         return {
+            // Noop in ESLint 4+
             'BlockComment': checkComment,
+            // Noop in ESLint 4+
             'LineComment': checkComment,
             'Literal': checkLiteral,
             'TemplateElement': checkTemplateElement,
