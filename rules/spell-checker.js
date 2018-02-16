@@ -113,13 +113,13 @@ module.exports = {
         });
 
         spell.use(dictionary);
-        options.skipWords = lodash.union(options.skipWords, skipWords)
+        options.skipWords = new Set(lodash.union(options.skipWords, skipWords)
             .map(function (string) {
                 return string.toLowerCase();
-            });
+            }));
 
         function isSpellingError(aWord) {
-            return !lodash.includes(options.skipWords, aWord) && !spell.check(aWord);
+            return !options.skipWords.has(aWord) && !spell.check(aWord);
         }
 
         function checkSpelling(aNode, value, spellingType) {
@@ -173,7 +173,7 @@ module.exports = {
         }
         /* Returns true if the string in value has to be skipped for spell checking */
         function hasToSkip(value) {
-            return lodash.includes(options.skipWords, value) ||
+            return options.skipWords.has(value) ||
                 lodash.find(options.skipIfMatch, function (aPattern) {
                     return value.match(aPattern);
                 });
