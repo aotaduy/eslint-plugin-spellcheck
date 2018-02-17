@@ -15,6 +15,7 @@
   "homepage": "https://github.com/sotaduy/eslint-plugin-spellcheck",
   "scripts": {
     "test": "gulp",
+    "performance": "gulp performance",
     "lint": "eslint -c .eslintrc.json rules/*.js"
   },
   "dependencies": {
