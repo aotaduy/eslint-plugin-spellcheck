@@ -80,6 +80,14 @@ module.exports = {
                     skipIfMatch: {
                         type: 'array',
                         default: []
+                    },
+                    skipWordIfMatch: {
+                        type: 'array',
+                        default: []
+                    },
+                    minLength: {
+                        type: 'number',
+                        default: 1
                     }
                 },
                 additionalProperties: false
@@ -103,7 +111,9 @@ module.exports = {
             identifiers: true,
             templates: true,
             skipWords: [],
-            skipIfMatch: []
+            skipIfMatch: [],
+            skipWordIfMatch: [],
+            minLength: 1
         },
         options = lodash.assign(defaultOptions, context.options[0]),
         lang = options.lang || 'en_US';
@@ -130,6 +140,7 @@ module.exports = {
                         .replace(/([A-Z])/g, ' $1').split(' '),
                     errors;
                 errors = nodeWords
+                    .filter(hasToSkipWord)
                     .filter(isSpellingError)
                     .filter(function(aWord) {
                       // Split words by numbers for special cases such as test12anything78variable and to include 2nd and 3rd ordinals
@@ -177,6 +188,21 @@ module.exports = {
                 lodash.find(options.skipIfMatch, function (aPattern) {
                     return value.match(aPattern);
                 });
+        }
+
+        /**
+         * returns false if the word has to be skipped
+         * @param  {string}  word
+         * @return {Boolean} false if skip; true if not
+         */
+        function hasToSkipWord(word) {
+            if(word.length < options.minLength) return false;
+            if(lodash.find(options.skipWordIfMatch, function (aPattern) {
+                return word.match(aPattern);
+            })){
+                return false;
+            }
+            return true;
         }
 
         return {
