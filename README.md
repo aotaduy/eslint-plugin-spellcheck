@@ -5,7 +5,7 @@
 ## Configuration
 
  This ESLint plugin, like others, can be reconfigured to produce errors (2), warnings (1), or disabled (0) with the first numeric argument.  For more information on ESLint configuration, see: http://eslint.org/docs/user-guide/configuring
- 
+
 ````
 "comments": <<Boolean>> default: true
 Check Spelling inside comments
@@ -29,6 +29,13 @@ Array of words that will not be checked.
 "skipIfMatch": <<Array Of Strings>> default: []
 Array of Regular Expressions the plugin will try to match the js node element value (identifier, comment, string, string template, etc) and will not check the entire node content if matched, be careful in comments because if a part of the comment is matched the entire comment will not be checked, same for strings.
 i.e: "^[-\\w]+\/[-\\w\\.]+$" will ignore MIME types.
+
+"skipWordIfMatch": <<Array Of Strings>> default: []
+Array of Regular Expressions the plugin will try to match every single word that is found in the nodes (identifier, comment, string, string template, etc) and will not check the single word if matched.
+i.e: "^[-\\w]+\/[-\\w\\.]+$" will ignore MIME types.
+
+"minLength": <<Number>> default: 1
+Words with a character-amount of less than the minLength will not be spell-checked.
 ````
 
 Check example below
@@ -69,8 +76,12 @@ Check example below
                ],
                "skipIfMatch": [
                    "http://[^s]*",
-                    "^[-\\w]+\/[-\\w\\.]+$" //For MIME Types
-               ]
+                   "^[-\\w]+\/[-\\w\\.]+$" //For MIME Types
+               ],
+               "skipWordIfMatch": [
+                   "^foobar.*$" // words that begin with foobar will not be checked
+               ],
+               "minLength": 3
             }
         ]
     }
@@ -106,7 +117,11 @@ Check example below
                 ],
                 "skipIfMatch": [
                     "http://[^s]*"
-                ]
+                ],
+                "skipWordIfMatch": [
+                    "^foobar.*$"
+                ],
+                "minLength": 3
             }
         ]
    }

@@ -85,6 +85,14 @@ module.exports = {
                     skipIfMatch: {
                         type: 'array',
                         default: []
+                    },
+                    skipWordIfMatch: {
+                        type: 'array',
+                        default: []
+                    },
+                    minLength: {
+                        type: 'number',
+                        default: 1
                     }
                 },
                 additionalProperties: false
@@ -108,7 +116,9 @@ module.exports = {
             identifiers: true,
             templates: true,
             skipWords: [],
-            skipIfMatch: []
+            skipIfMatch: [],
+            skipWordIfMatch: [],
+            minLength: 1
         },
         options = lodash.assign(defaultOptions, context.options[0]),
         lang = options.lang || 'en_US';
@@ -118,13 +128,13 @@ module.exports = {
         });
 
         spell.use(dictionary);
-        options.skipWords = lodash.union(options.skipWords, skipWords)
+        options.skipWords = new Set(lodash.union(options.skipWords, skipWords)
             .map(function (string) {
                 return string.toLowerCase();
-            });
+            }));
 
         function isSpellingError(aWord) {
-            return !lodash.includes(options.skipWords, aWord) && !spell.check(aWord);
+            return !options.skipWords.has(aWord) && !spell.check(aWord);
         }
 
         function checkSpelling(aNode, value, spellingType) {
@@ -135,6 +145,7 @@ module.exports = {
                         .replace(/([A-Z])/g, ' $1').split(' '),
                     errors;
                 errors = nodeWords
+                    .filter(hasToSkipWord)
                     .filter(isSpellingError)
                     .filter(function(aWord) {
                       // Split words by numbers for special cases such as test12anything78variable and to include 2nd and 3rd ordinals
@@ -178,12 +189,28 @@ module.exports = {
         }
         /* Returns true if the string in value has to be skipped for spell checking */
         function hasToSkip(value) {
-            return lodash.includes(options.skipWords, value) ||
+            return options.skipWords.has(value) ||
                 lodash.find(options.skipIfMatch, function (aPattern) {
                     return value.match(aPattern);
                 });
         }
 
+
+        /**
+         * returns false if the word has to be skipped
+         * @param  {string}  word
+         * @return {Boolean} false if skip; true if not
+         */
+        function hasToSkipWord(word) {
+            if(word.length < options.minLength) return false;
+            if(lodash.find(options.skipWordIfMatch, function (aPattern) {
+                return word.match(aPattern);
+            })){
+                return false;
+            }
+            return true;
+        }
+      
         // Coverage exclusion only needed for ESLint<4
         /* istanbul ignore next */
         if (isEslint4OrAbove(context)) {
@@ -194,7 +221,7 @@ module.exports = {
               checkComment(commentNode);
             });
         }
-
+      
         return {
             // Noop in ESLint 4+
             'BlockComment': checkComment,
