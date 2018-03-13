@@ -26,7 +26,7 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "coveralls": "^2.11.12",
-    "eslint": "^3.2.2",
+    "eslint": "^3.2.2 || ^4.0.0",
     "gulp": "^3.9.1",
     "gulp-istanbul": "1.0.0",
     "gulp-mocha": "^3.0.0",
