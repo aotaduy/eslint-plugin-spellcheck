@@ -12,7 +12,7 @@
   "bugs": {
     "url": "https://github.com/aotaduy/eslint-plugin-spellcheck/issues"
   },
-  "homepage": "https://github.com/sotaduy/eslint-plugin-spellcheck",
+  "homepage": "https://github.com/aotaduy/eslint-plugin-spellcheck",
   "scripts": {
     "test": "gulp",
     "performance": "gulp performance",
