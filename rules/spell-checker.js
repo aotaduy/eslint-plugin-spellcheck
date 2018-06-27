@@ -154,7 +154,6 @@ module.exports = {
                         return splitByNumberWords.some(isSpellingError);
                     })
                     .forEach(function(aWord) {
-                      console.log(aWord);
                         context.report(
                             aNode,
                             'You have a misspelled word: {{word}} on {{spellingType}}', {
