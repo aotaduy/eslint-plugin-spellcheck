@@ -7,7 +7,8 @@ var lodash = require('lodash'),
     globals = require('globals');
 
 var spell = new Spellchecker(),
-    dictionary,
+    dictionary = null,
+    dictionaryLang,
     skipWords = lodash.union(
         lodash.keys(globals.builtin),
         lodash.keys(globals.browser),
@@ -122,16 +123,26 @@ module.exports = {
         },
         options = lodash.assign(defaultOptions, context.options[0]),
         lang = options.lang || 'en_US';
-        dictionary = spell.parse({
-          aff: fs.readFileSync(__dirname + '/utils/dicts/' + lang + '.aff'),
-          dic: fs.readFileSync(__dirname + '/utils/dicts/' + lang + '.dic')
-        });
 
-        spell.use(dictionary);
+
+        if (dictionaryLang !== lang) { //Dictionary will only be initialized if changed
+            dictionaryLang = lang;
+            initializeDictionary(lang);
+        }
+
         options.skipWords = new Set(lodash.union(options.skipWords, skipWords)
             .map(function (string) {
                 return string.toLowerCase();
             }));
+
+        function initializeDictionary(language) {
+            dictionary = spell.parse({
+                aff: fs.readFileSync(__dirname + '/utils/dicts/' + language + '.aff'),
+                dic: fs.readFileSync(__dirname + '/utils/dicts/' + language + '.dic')
+            });
+
+            spell.use(dictionary);
+        }
 
         function isSpellingError(aWord) {
             return !options.skipWords.has(aWord) && !spell.check(aWord);
@@ -209,7 +220,7 @@ module.exports = {
             }
             return true;
         }
-      
+
         // Coverage exclusion only needed for ESLint<4
         /* istanbul ignore next */
         if (isEslint4OrAbove(context)) {
@@ -220,7 +231,7 @@ module.exports = {
               checkComment(commentNode);
             });
         }
-      
+
         return {
             // Noop in ESLint 4+
             'BlockComment': checkComment,
