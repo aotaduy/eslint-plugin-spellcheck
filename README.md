@@ -126,3 +126,19 @@ Check example below
         ]
    }
     ```
+
+## Skipping words ending with a number
+To skip words like md5, sha1 and sha256, add to `skipWords` the root of the word, that is, without the number:
+
+```json
+"rules": {
+    "spellcheck/spell-checker": [1,
+        {
+            "skipWords": [
+                "md",
+                "sha"
+            ],
+        }
+    ]
+}
+```
