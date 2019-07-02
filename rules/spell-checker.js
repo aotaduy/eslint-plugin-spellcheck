@@ -175,6 +175,10 @@ module.exports = {
                 }
             }
 
+        function isInImportDeclaration( aNode ) {
+          return aNode.parent && aNode.parent.type === 'ImportDeclaration';
+        }
+
         function checkComment(aNode) {
             if(options.comments) {
                 checkSpelling(aNode, aNode.value, 'Comment');
@@ -182,12 +186,12 @@ module.exports = {
         }
 
         function checkLiteral(aNode){
-            if(options.strings && typeof aNode.value === 'string') {
+            if(options.strings && typeof aNode.value === 'string' && !isInImportDeclaration(aNode)) {
                 checkSpelling(aNode, aNode.value, 'String');
             }
         }
         function checkTemplateElement(aNode){
-            if(options.templates && typeof aNode.value.raw === 'string') {
+            if(options.templates && typeof aNode.value.raw === 'string' && !isInImportDeclaration(aNode)) {
                 checkSpelling(aNode, aNode.value.raw, 'Template');
             }
         }
