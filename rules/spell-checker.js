@@ -176,7 +176,9 @@ module.exports = {
             }
 
         function isInImportDeclaration( aNode ) {
-          return aNode.parent && aNode.parent.type === 'ImportDeclaration';
+          // @see https://buildmedia.readthedocs.org/media/pdf/esprima/latest/esprima.pdf
+          return aNode.parent &&
+            (aNode.parent.type === 'ImportDeclaration' || aNode.parent.type === 'ExportDeclaration');
         }
 
         function checkComment(aNode) {

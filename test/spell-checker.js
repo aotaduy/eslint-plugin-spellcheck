@@ -12,6 +12,13 @@ var rule = require('../rules/spell-checker'),
 var ruleTester = new RuleTester({
     env: {
         'es6': true
+    },
+    ecmaFeatures: {
+      "modules": true
+    },
+    parserOptions: {
+      "ecmaVersion": 2018,
+      "sourceType": "module"
     }
 });
 
@@ -33,6 +40,9 @@ ruleTester.run('spellcheck/spell-checker', rule, {
         'var a = \'foobar\'.substring(0,1)',
         'var a = JSON.stringify({})',
         'var a = Math.trunc(-0.1)',
+        'import Foo from "component/Foo"',
+        'import { Foo } from "component/Foo"',
+        'export { Foo } from "component/Foo"',
         {
             code: 'var url = "http://examplus.com"',
             options:[{skipWords: ['url'], skipIfMatch:['http://[^\s]*']}]
