@@ -175,6 +175,12 @@ module.exports = {
                 }
             }
 
+        function isInImportDeclaration( aNode ) {
+          // @see https://buildmedia.readthedocs.org/media/pdf/esprima/latest/esprima.pdf
+          return aNode.parent &&
+            (aNode.parent.type === 'ImportDeclaration' || aNode.parent.type === 'ExportDeclaration');
+        }
+
         function checkComment(aNode) {
             if(options.comments) {
                 checkSpelling(aNode, aNode.value, 'Comment');
@@ -182,12 +188,12 @@ module.exports = {
         }
 
         function checkLiteral(aNode){
-            if(options.strings && typeof aNode.value === 'string') {
+            if(options.strings && typeof aNode.value === 'string' && !isInImportDeclaration(aNode)) {
                 checkSpelling(aNode, aNode.value, 'String');
             }
         }
         function checkTemplateElement(aNode){
-            if(options.templates && typeof aNode.value.raw === 'string') {
+            if(options.templates && typeof aNode.value.raw === 'string' && !isInImportDeclaration(aNode)) {
                 checkSpelling(aNode, aNode.value.raw, 'Template');
             }
         }
