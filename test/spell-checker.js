@@ -55,7 +55,11 @@ ruleTester.run('spellcheck/spell-checker', rule, {
         {
             code: 'var myOrmFunctions = "myElement"',
             options:[{skipWordIfMatch: ['^.{1,3}$']}]
-        }
+        },
+        {
+            code: 'var source = \'<div className="video-img">\'',
+            options:[{skipIfMatch:['=".*"']}]
+        },
     ],
     invalid: [
         {
