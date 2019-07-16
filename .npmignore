@@ -3,3 +3,5 @@ test
 .eslintrc.json
 .travis.yml
 gulpfile.js
+.idea
+coverage

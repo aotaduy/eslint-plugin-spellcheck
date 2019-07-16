@@ -35,3 +35,4 @@ package-lock.json
 
 #project files
 .idea
+coverage
