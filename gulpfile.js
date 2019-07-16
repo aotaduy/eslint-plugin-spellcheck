@@ -22,5 +22,5 @@
 					.on('end', cb);
 		});
 
-	gulp.task('default', ['test']);
+	gulp.task('default', gulp.parallel('test'));
 }());

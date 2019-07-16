@@ -13,12 +13,13 @@ var ruleTester = new RuleTester({
     env: {
         'es6': true
     },
-    ecmaFeatures: {
-      "modules": true
-    },
+
     parserOptions: {
       "ecmaVersion": 2018,
-      "sourceType": "module"
+      "sourceType": "module",
+        ecmaFeatures: {
+            "modules": true
+        }
     }
 });
 
