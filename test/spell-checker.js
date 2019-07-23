@@ -41,6 +41,7 @@ ruleTester.run('spellcheck/spell-checker', rule, {
         'var a = \'foobar\'.substring(0,1)',
         'var a = JSON.stringify({})',
         'var a = Math.trunc(-0.1)',
+        'var pack = require("webpack")',
         'import Foo from "component/Foo"',
         'import { Foo } from "component/Foo"',
         'export { Foo } from "component/Foo"',

@@ -175,10 +175,12 @@ module.exports = {
                 }
             }
 
-        function isInImportDeclaration( aNode ) {
-          // @see https://buildmedia.readthedocs.org/media/pdf/esprima/latest/esprima.pdf
-          return aNode.parent &&
-            (aNode.parent.type === 'ImportDeclaration' || aNode.parent.type === 'ExportDeclaration');
+        function isInImportDeclaration(aNode) {
+            // @see https://buildmedia.readthedocs.org/media/pdf/esprima/latest/esprima.pdf
+            return aNode.parent && (
+                (aNode.parent.type === 'ImportDeclaration' || aNode.parent.type === 'ExportDeclaration') ||
+                (aNode.parent.type === 'CallExpression' && aNode.parent.callee.name === 'require')
+            );
         }
 
         function checkComment(aNode) {
