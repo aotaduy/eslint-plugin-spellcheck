@@ -65,6 +65,10 @@ module.exports = {
                         type: 'boolean',
                         default: true
                     },
+                    ignoreRequire: {
+                        type: 'boolean',
+                        default: false
+                    },
                     templates: {
                         type: 'boolean',
                         default: true
@@ -179,7 +183,7 @@ module.exports = {
             // @see https://buildmedia.readthedocs.org/media/pdf/esprima/latest/esprima.pdf
             return aNode.parent && (
                 (aNode.parent.type === 'ImportDeclaration' || aNode.parent.type === 'ExportDeclaration') ||
-                (aNode.parent.type === 'CallExpression' && aNode.parent.callee.name === 'require')
+                (options.ignoreRequire && aNode.parent.type === 'CallExpression' && aNode.parent.callee.name === 'require')
             );
         }
 

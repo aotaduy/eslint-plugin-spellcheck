@@ -16,6 +16,9 @@ Check Spelling inside strings
 "identifiers": <<Boolean>>, default: true
 Check Spelling inside identifiers
 
+"ignoreRequire": <<Boolean>>, default: false
+Exclude `require()` imports from spell-checking. Useful for excluding NPM package name false-positives.
+
 "templates": <<Boolean>>, default: true
 Check Spelling inside ES6 templates you should enable parser options for ES6 features for this to work
 Refer to: [specifying-parser-options](http://eslint.org/docs/user-guide/configuring#specifying-parser-options)

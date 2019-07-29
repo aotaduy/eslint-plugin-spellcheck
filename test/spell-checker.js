@@ -41,7 +41,10 @@ ruleTester.run('spellcheck/spell-checker', rule, {
         'var a = \'foobar\'.substring(0,1)',
         'var a = JSON.stringify({})',
         'var a = Math.trunc(-0.1)',
-        'var pack = require("webpack")',
+        {
+            code: 'var pack = require("webpack")',
+            options:[{ignoreRequire: true}]
+        },
         'import Foo from "component/Foo"',
         'import { Foo } from "component/Foo"',
         'export { Foo } from "component/Foo"',
@@ -143,6 +146,12 @@ ruleTester.run('spellcheck/spell-checker', rule, {
             errors: [
                 { message: 'You have a misspelled word: color on Comment'},
                 { message: 'You have a misspelled word: behavior on Comment'}]
+        },
+        {
+            code: 'var pack = require("webpack")',
+            options:[{ignoreRequire:false}],
+            errors: [
+                { message: 'You have a misspelled word: webpack on String'}]
         }
     ]
 });
