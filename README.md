@@ -21,7 +21,7 @@ Check Spelling inside ES6 templates you should enable parser options for ES6 fea
 Refer to: [specifying-parser-options](http://eslint.org/docs/user-guide/configuring#specifying-parser-options)
 
 "lang": <<String>>, default: "en_US"
-Choose the language you want to use. Options are: "en_US", "en_CA", and "en_GB"
+Choose the language you want to use. Options are: "en_US", "en_CA", "en_AU", and "en_GB"
 
 "skipWords": <<Array Of Strings>> default: []
 Array of words that will not be checked.
