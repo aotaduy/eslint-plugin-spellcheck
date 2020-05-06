@@ -16,11 +16,5 @@
 		});
 	});
 
-  gulp.task('performance', function (cb) {
-				gulp.src([ 'test/performance.js'])
-					.pipe(mocha({timeout: 10000}))
-					.on('end', cb);
-		});
-
 	gulp.task('default', gulp.parallel('test'));
 }());
