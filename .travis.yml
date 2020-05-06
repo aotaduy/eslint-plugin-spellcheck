@@ -13,4 +13,3 @@ matrix:
 script:
   - npm run lint
   - npm test
-  - npm run performance
