@@ -151,6 +151,23 @@ ruleTester.run('spellcheck/spell-checker', rule, {
                 { message: 'You have a misspelled word: color on Comment'},
                 { message: 'You have a misspelled word: behavior on Comment'}]
         },
+        // test australian spelling
+        {
+            code: 'var a = 1 // guerilla\'s stole zucchini from the Nullarbor shrubland (AU)',
+            options:[{ lang: 'en_AU' }],
+            errors: [
+                { message: 'You have a misspelled word: guerilla\'s on Comment' },
+                { message: 'You have a misspelled word: shrubland on Comment' },
+            ],
+        },
+        {
+            code: 'var a = 1 // guerilla\'s stole zucchini from the Nullarbor shrubland (GB)',
+            options:[{ lang: 'en_GB' }],
+            errors: [
+                { message: 'You have a misspelled word: zucchini on Comment' },
+                { message: 'You have a misspelled word: Nullarbor on Comment' },
+            ],
+        },
         {
             code: 'var pack = require("webpack")',
             options:[{ignoreRequire:false}],
