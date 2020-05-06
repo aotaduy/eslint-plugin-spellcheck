@@ -2,7 +2,64 @@
 [eslint](http://eslint.org) plugin to spell check words on identifiers, Strings and comments of javascript files.
 [![dependencies Status](https://david-dm.org/aotaduy/eslint-plugin-spellcheck/status.svg)](https://david-dm.org/aotaduy/eslint-plugin-spellcheck)
 [![Build Status](https://travis-ci.org/aotaduy/eslint-plugin-spellcheck.svg?branch=master)](https://travis-ci.org/aotaduy/eslint-plugin-spellcheck)
-## Configuration
+
+## Usage in a project
+
+1. Install `eslint-plugin-spellcheck` as a dev-dependency:
+
+    ```shell
+    npm install --save-dev eslint-plugin-spellcheck
+    ```
+
+2. Enable the plugin by adding it to your `.eslintrc`:
+
+    ```yaml
+    plugins:
+      - spellcheck
+    ```
+3. simplest configuration .eslintrc: 
+
+    ```json
+    "plugins": [
+       "spellcheck"
+   ],
+   "rules": {
+       "spellcheck/spell-checker": ["warn"]
+
+4. You can also configure these rules in your `.eslintrc`. All rules defined in this plugin have to be prefixed by 'spellcheck/'
+
+    ```json
+    "plugins": [
+       "spellcheck"
+   ],
+   "rules": {
+       "spellcheck/spell-checker": [1,
+           {
+               "comments": true,
+               "strings": true,
+               "identifiers": true,
+               "lang": "en_US",
+               "skipWords": [
+                   "dict",
+                   "aff",
+                   "hunspellchecker",
+                   "hunspell",
+                   "utils"
+               ],
+               "skipIfMatch": [
+                   "http://[^s]*",
+                   "^[-\\w]+\/[-\\w\\.]+$" //For MIME Types
+               ],
+               "skipWordIfMatch": [
+                   "^foobar.*$" // words that begin with foobar will not be checked
+               ],
+               "minLength": 3
+            }
+        ]
+    }
+    ```
+
+## Configuration Options
 
  This ESLint plugin, like others, can be reconfigured to produce errors (2), warnings (1), or disabled (0) with the first numeric argument.  For more information on ESLint configuration, see: http://eslint.org/docs/user-guide/configuring
 
@@ -43,52 +100,6 @@ Words with a character-amount of less than the minLength will not be spell-check
 
 Check example below
 
-## Usage in a project
-
-1. Install `eslint-plugin-spellcheck` as a dev-dependency:
-
-    ```shell
-    npm install --save-dev eslint-plugin-spellcheck
-    ```
-
-2. Enable the plugin by adding it to your `.eslintrc`:
-
-    ```yaml
-    plugins:
-      - spellcheck
-    ```
-3. You can also configure these rules in your `.eslintrc`. All rules defined in this plugin have to be prefixed by 'spellcheck/'
-
-    ```json
-    "plugins": [
-       "spellcheck"
-   ],
-   "rules": {
-       "spellcheck/spell-checker": [1,
-           {
-               "comments": true,
-               "strings": true,
-               "identifiers": true,
-               "lang": "en_US",
-               "skipWords": [
-                   "dict",
-                   "aff",
-                   "hunspellchecker",
-                   "hunspell",
-                   "utils"
-               ],
-               "skipIfMatch": [
-                   "http://[^s]*",
-                   "^[-\\w]+\/[-\\w\\.]+$" //For MIME Types
-               ],
-               "skipWordIfMatch": [
-                   "^foobar.*$" // words that begin with foobar will not be checked
-               ],
-               "minLength": 3
-            }
-        ]
-    }
-    ```
 
 ## Usage globally
 

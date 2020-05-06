@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-spellcheck",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "ESLint rules to spell check js files",
   "main": "index.js",
   "repository": {
@@ -18,7 +18,7 @@
     "lint": "eslint -c .eslintrc.json rules/*.js"
   },
   "dependencies": {
-    "globals": "^12.0.0",
+    "globals": "^13.0.0",
     "hunspell-spellchecker": "^1.0.2",
     "lodash": "^4.17.15"
   },
