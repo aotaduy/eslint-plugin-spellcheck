@@ -65,6 +65,10 @@ module.exports = {
                         type: 'boolean',
                         default: true
                     },
+                    ignoreRequire: {
+                        type: 'boolean',
+                        default: false
+                    },
                     templates: {
                         type: 'boolean',
                         default: true
@@ -175,10 +179,12 @@ module.exports = {
                 }
             }
 
-        function isInImportDeclaration( aNode ) {
-          // @see https://buildmedia.readthedocs.org/media/pdf/esprima/latest/esprima.pdf
-          return aNode.parent &&
-            (aNode.parent.type === 'ImportDeclaration' || aNode.parent.type === 'ExportDeclaration');
+        function isInImportDeclaration(aNode) {
+            // @see https://buildmedia.readthedocs.org/media/pdf/esprima/latest/esprima.pdf
+            return aNode.parent && (
+                (aNode.parent.type === 'ImportDeclaration' || aNode.parent.type === 'ExportDeclaration') ||
+                (options.ignoreRequire && aNode.parent.type === 'CallExpression' && aNode.parent.callee.name === 'require')
+            );
         }
 
         function checkComment(aNode) {
