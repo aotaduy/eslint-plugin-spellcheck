@@ -36,10 +36,12 @@ ruleTester.run('spellcheck/spell-checker', rule, {
         'var a = function testingCamelCase(each){};',
         'var a = RegExp',
         'var a = "January"',
+        'var a = "#AACC00"',
         'var a = \'Hello how are you this is a string\'',
         'var a = \'ArrayBuffer\'',
         'var a = \'foobar\'.substring(0,1)',
         'var a = JSON.stringify({})',
+        'var url = "http://examplus.com"',
         'var a = Math.trunc(-0.1)',
         {
             code: 'var pack = require("webpack")',
@@ -94,13 +96,6 @@ ruleTester.run('spellcheck/spell-checker', rule, {
                 { message: 'You have a misspelled word: srting on Comment'}]
         },
         {
-            code: 'var url = "http://examplus.com"',
-            options:[{skipWords: ['url']}],
-            errors: [
-                { message: 'You have a misspelled word: http on String'},
-                { message: 'You have a misspelled word: examplus on String'}]
-        },
-        {
             code: 'var a = 1 /* tsih is a comment srting Block */ ',
             errors: [
                 { message: 'You have a misspelled word: tsih on Comment'},
@@ -109,8 +104,7 @@ ruleTester.run('spellcheck/spell-checker', rule, {
         {
             code: 'var test12anthing78variable = 1 // This shuldn\'t fail, not the first or the 3rd time ',
             errors: [
-                { message: 'You have a misspelled word: test12anthing78variable on Identifier'},
-                { message: 'You have a misspelled word: shuldn\'t on Comment'}]
+                { message: 'You have a misspelled word: test12anthing78variable on Identifier'}]
         },
         {
             code: 'var angular = tsihIsATest(of_a_snake_case_srting)',
@@ -119,10 +113,10 @@ ruleTester.run('spellcheck/spell-checker', rule, {
                 { message: 'You have a misspelled word: srting on Identifier'}]
         },
         {
-            code: 'var el = "myElement"',
+            code: 'var xe = "myElement"',
             options:[{minLength: 2}],
             errors: [
-                { message: 'You have a misspelled word: el on Identifier'}
+                { message: 'You have a misspelled word: xe on Identifier'}
             ]
         },
         {

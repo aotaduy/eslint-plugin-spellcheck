@@ -25,6 +25,7 @@
    ],
    "rules": {
        "spellcheck/spell-checker": ["warn"]
+    }
 
 4. You can also configure these rules in your `.eslintrc`. All rules defined in this plugin have to be prefixed by 'spellcheck/'
 
@@ -156,3 +157,5 @@ To skip words like md5, sha1 and sha256, add to `skipWords` the root of the word
     ]
 }
 ```
+
+Please contact me with any issues on github or check my blog (spanish) [Area 204](https://aotaduy.github.io/area204/)

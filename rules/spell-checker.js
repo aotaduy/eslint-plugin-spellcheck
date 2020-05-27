@@ -4,23 +4,26 @@ var fs = require('fs');
 // 3rd party dependencies
 var lodash = require('lodash'),
     Spellchecker = require('hunspell-spellchecker'),
-    globals = require('globals');
+    globals = require('globals'),
+    defaultSettings = require('./defaultSettings');
+
+function getGloabalsSkipsWords() {
+    return lodash.keys(globals).map(function (each) {
+        return lodash.keys(globals[each])
+    });
+}
 
 var spell = new Spellchecker(),
     dictionary = null,
     dictionaryLang,
     skipWords = lodash.union(
-        lodash.keys(globals.builtin),
-        lodash.keys(globals.browser),
-        lodash.keys(globals.node),
-        lodash.keys(globals.mocha),
-        lodash.keys(globals.jasmine),
-        lodash.keys(globals.jquery),
-        lodash.keys(globals.shelljs),
+        ...getGloabalsSkipsWords(),
+        defaultSettings.skipWords,
         Object.getOwnPropertyNames(String.prototype),
         Object.getOwnPropertyNames(JSON),
         Object.getOwnPropertyNames(Math)
     );
+
 
 // ESLint 3 had "eslint.version" in context. ESLint 4 does not have one.
 function isEslint4OrAbove(context) {
@@ -138,6 +141,8 @@ module.exports = {
             .map(function (string) {
                 return string.toLowerCase();
             }));
+
+        options.skipIfMatch = lodash.union(options.skipIfMatch, defaultSettings.skipIfMatch);
 
         function initializeDictionary(language) {
             dictionary = spell.parse({
