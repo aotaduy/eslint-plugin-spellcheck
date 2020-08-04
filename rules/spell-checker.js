@@ -220,14 +220,18 @@ module.exports = {
                 checkSpelling(aNode, aNode.name, 'Identifier');
             }
         }
+
         /* Returns true if the string in value has to be skipped for spell checking */
         function hasToSkip(value) {
-            return hasValueInSkipWords(value) ||
-                lodash.find(options.skipIfMatch, function (aPattern) {
-                    return value.match(aPattern);
-                });
-        }
+            if (hasValueInSkipWords(value))
+                return true;
 
+            const escapedValue = value.replace(/'/g, '\\\'');
+
+            return lodash.find(options.skipIfMatch, function (aPattern) {
+                return escapedValue.match(aPattern);
+            });
+        }
 
         /**
          * returns false if the word has to be skipped
@@ -235,12 +239,16 @@ module.exports = {
          * @return {Boolean} false if skip; true if not
          */
         function hasToSkipWord(word) {
-            if(word.length < options.minLength) return false;
-            if(lodash.find(options.skipWordIfMatch, function (aPattern) {
-                return word.match(aPattern);
-            })){
-                return false;
+            if (word.length < options.minLength) return false;
+
+            if (options.skipWordIfMatch) {
+                const escapedWord = word.replace(/'/g, '\\\'');
+
+                return !lodash.find(options.skipWordIfMatch, function (aPattern) {
+                    return escapedWord.match(aPattern);
+                });
             }
+
             return true;
         }
 

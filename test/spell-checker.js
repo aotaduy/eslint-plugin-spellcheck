@@ -66,6 +66,10 @@ ruleTester.run('spellcheck/spell-checker', rule, {
             code: 'var source = \'<div className="video-img">\'',
             options:[{skipIfMatch:['=".*"']}]
         },
+        {
+            code: "var foo = 'This shouldn\\'t fail and also \\'tsih\\''",
+            options: [{skipWordIfMatch: ["'[^']+'"]}],
+        },
     ],
     invalid: [
         {
@@ -166,7 +170,21 @@ ruleTester.run('spellcheck/spell-checker', rule, {
             code: 'var pack = require("webpack")',
             options:[{ignoreRequire:false}],
             errors: [
-                { message: 'You have a misspelled word: webpack on String'}]
-        }
+                { message: 'You have a misspelled word: webpack on String'}
+            ]
+        },
+        {
+            code: "var foo = 'This shouldn\\'t fail, but tsih should'",
+            errors: [
+                { message: 'You have a misspelled word: tsih on String'}
+            ]
+        },
+        {
+            code: "var foo = 'This shouldn\\'t fail and also \\'tsih\\', but this wod should'",
+            options: [{skipWordIfMatch: ["'[^']+'"]}],
+            errors: [
+                { message: 'You have a misspelled word: wod on String'}
+            ]
+        },
     ]
 });
