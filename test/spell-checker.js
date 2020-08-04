@@ -44,6 +44,10 @@ ruleTester.run('spellcheck/spell-checker', rule, {
         'var url = "http://examplus.com"',
         'var a = Math.trunc(-0.1)',
         {
+            code: 'var a = 1 // This is a comment',
+            options: [{lang: 'sym', langDir: __dirname}]
+        },
+        {
             code: 'var pack = require("webpack")',
             options:[{ignoreRequire: true}]
         },
