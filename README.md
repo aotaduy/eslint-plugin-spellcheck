@@ -84,6 +84,9 @@ Refer to: [specifying-parser-options](http://eslint.org/docs/user-guide/configur
 "lang": <<String>>, default: "en_US"
 Choose the language you want to use. Options are: "en_US", "en_CA", "en_AU", and "en_GB"
 
+"langDir": <<String>>, default: ""
+Language files directory path. By default uses the plugin directory.
+
 "skipWords": <<Array Of Strings>> default: []
 Array of words that will not be checked.
 
