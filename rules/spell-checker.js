@@ -13,22 +13,32 @@ function getGloabalsSkipsWords() {
     });
 }
 
-var spell = new Spellchecker(),
-    dictionary = null,
-    dictionaryLang,
+var spells = {},
+    dictionaries = {},
     skipWords = lodash.union(
         ...getGloabalsSkipsWords(),
         defaultSettings.skipWords,
         Object.getOwnPropertyNames(String.prototype),
         Object.getOwnPropertyNames(JSON),
         Object.getOwnPropertyNames(Math)
-    );
-
+    ),
+    spellingTypeMap = {
+        Comment: 'comments',
+        String: 'strings',
+        Template: 'templates',
+        Identifier: 'identifiers',
+    },
+    defaultLanguage = 'en_US';
 
 // ESLint 3 had "eslint.version" in context. ESLint 4 does not have one.
 function isEslint4OrAbove(context) {
   return !('eslint' in context);
 }
+
+var langScheme = {
+    type: 'string',
+    enum: ['en_US', 'en_GB', 'en_AU', 'en_CA', 'ru_RU']
+} 
 
 module.exports = {
     // meta (object) contains metadata for the rule:
@@ -77,7 +87,18 @@ module.exports = {
                         default: true
                     },
                     lang: {
-                        type: 'string',
+                        anyOf: [
+                            langScheme,
+                            { 
+                                type: 'object',
+                                properties: {
+                                    comments: langScheme,
+                                    strings: langScheme,
+                                    identifiers: langScheme,
+                                    templates: langScheme
+                                }
+                            }
+                        ],
                         default: 'en_US'
                     },
                     skipWords: {
@@ -129,13 +150,24 @@ module.exports = {
             minLength: 1
         },
         options = lodash.assign(defaultOptions, context.options[0]),
-        lang = options.lang || 'en_US';
+        lang = {};
 
-
-        if (dictionaryLang !== lang) { //Dictionary will only be initialized if changed
-            dictionaryLang = lang;
-            initializeDictionary(lang);
+        if (lodash.isString(options.lang) || lodash.isNil(options.lang)) {
+            var commonLang = options.lang || defaultLanguage;
+            lang = {
+                comments: commonLang,
+                strings: commonLang,
+                identifiers: commonLang,
+                templates: commonLang
+            }
+        } else {
+            var enabledSpellingTypes = lodash.values(spellingTypeMap).filter(spellingType => options[spellingType]);
+            enabledSpellingTypes.forEach(spellingType => {
+                lang[spellingType] = options.lang[spellingType] || defaultLanguage;
+            })
         }
+
+        initializeDictionary(lang)
 
         options.skipWords = new Set(lodash.union(options.skipWords, skipWords)
             .map(function (string) {
@@ -144,17 +176,25 @@ module.exports = {
 
         options.skipIfMatch = lodash.union(options.skipIfMatch, defaultSettings.skipIfMatch);
 
-        function initializeDictionary(language) {
-            dictionary = spell.parse({
-                aff: fs.readFileSync(__dirname + '/utils/dicts/' + language + '.aff'),
-                dic: fs.readFileSync(__dirname + '/utils/dicts/' + language + '.dic')
-            });
-
-            spell.use(dictionary);
+        function initializeDictionary(languages) {
+            lodash.forEach(languages, language => {
+                if (!spells[language]) {
+                    spells[language] = new Spellchecker()
+                    if (!dictionaries[language]) {
+                        dictionaries[language] = spells[language].parse({
+                            aff: fs.readFileSync(__dirname + '/utils/dicts/' + language + '.aff'),
+                            dic: fs.readFileSync(__dirname + '/utils/dicts/' + language + '.dic')
+                        });
+                    }
+                    spells[language].use(dictionaries[language])
+                }
+            })
         }
 
-        function isSpellingError(aWord) {
-            return !options.skipWords.has(aWord) && !spell.check(aWord);
+        function makeIsSpellingError(spell) {
+            return function isSpellingError(aWord) {
+                return !options.skipWords.has(aWord) && !spell.check(aWord);
+            }
         }
 
         function checkSpelling(aNode, value, spellingType) {
@@ -163,6 +203,9 @@ module.exports = {
                 var regexp = /(\\[sSwdDB0nfrtv])|\\[0-7][0-7][0-7]|\\x[0-9A-F][0-9A-F]|\\u[0-9A-F][0-9A-F][0-9A-F][0-9A-F]|[^0-9a-zA-Z ']/g,
                     nodeWords = value.replace(regexp, ' ')
                         .replace(/([A-Z])/g, ' $1').split(' '),
+                    spellingTypeLang = lang[spellingTypeMap[spellingType]],
+                    spell = spells[spellingTypeLang],
+                    isSpellingError = makeIsSpellingError(spell),
                     errors;
                 errors = nodeWords
                     .filter(hasToSkipWord)

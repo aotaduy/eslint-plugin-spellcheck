@@ -66,6 +66,14 @@ ruleTester.run('spellcheck/spell-checker', rule, {
             code: 'var source = \'<div className="video-img">\'',
             options:[{skipIfMatch:['=".*"']}]
         },
+        {
+            code: 'var source = \'Добрый день, как ваши дела?\' // Комментарий',
+            options:[
+                {
+                    lang: { strings: 'ru_RU', comments: 'ru_RU', templates: 'ru_RU' }
+                }
+            ]
+        },
     ],
     invalid: [
         {
