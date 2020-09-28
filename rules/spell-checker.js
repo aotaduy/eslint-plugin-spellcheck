@@ -200,7 +200,7 @@ module.exports = {
         function checkSpelling(aNode, value, spellingType) {
             if(!hasToSkip(value)) {
                 // Regular expression matches regexp metacharacters, and any special char
-                var regexp = /(\\[sSwdDB0nfrtv])|\\[0-7][0-7][0-7]|\\x[0-9A-F][0-9A-F]|\\u[0-9A-F][0-9A-F][0-9A-F][0-9A-F]|[^0-9a-zA-Z ']/g,
+                var regexp = /(\\[sSwdDB0nfrtv])|\\[0-7][0-7][0-7]|\\x[0-9A-F][0-9A-F]|\\u[0-9A-F][0-9A-F][0-9A-F][0-9A-F]|[^0-9a-zA-Zа-яА-ЯёЁ ']/g,
                     nodeWords = value.replace(regexp, ' ')
                         .replace(/([A-Z])/g, ' $1').split(' '),
                     spellingTypeLang = lang[spellingTypeMap[spellingType]],

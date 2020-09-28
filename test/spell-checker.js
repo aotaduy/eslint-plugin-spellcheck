@@ -175,6 +175,18 @@ ruleTester.run('spellcheck/spell-checker', rule, {
             options:[{ignoreRequire:false}],
             errors: [
                 { message: 'You have a misspelled word: webpack on String'}]
+        },
+        {
+            code: 'var source = \'Дбрый день, как ваши дшла?\' // Комментарий',
+            options:[
+                {
+                    lang: { strings: 'ru_RU', comments: 'ru_RU', templates: 'ru_RU' }
+                }
+            ],
+            errors: [
+                { message: 'You have a misspelled word: Дбрый on String'},
+                { message: 'You have a misspelled word: дшла on String'},
+            ]
         }
     ]
 });
