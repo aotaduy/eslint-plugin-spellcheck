@@ -214,7 +214,7 @@ module.exports = {
             if(!hasToSkip(value)) {
                 // Regular expression matches regexp metacharacters, and any special char
                 var spellingTypeLang = lang[spellingTypeMap[spellingType]],
-                    regexp = langRegexpFilter[spellingTypeLang], // /(\\[sSwdDB0nfrtv])|\\[0-7][0-7][0-7]|\\x[0-9A-F][0-9A-F]|\\u[0-9A-F][0-9A-F][0-9A-F][0-9A-F]|[^0-9a-zA-Zа-яА-ЯёЁ ']/g,
+                    regexp = langRegexpFilter[spellingTypeLang],
                     nodeWords = value.replace(regexp, ' ')
                         .replace(/([A-Z])/g, ' $1').split(' '),
                     spell = spells[spellingTypeLang],
