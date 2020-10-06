@@ -70,7 +70,7 @@ ruleTester.run('spellcheck/spell-checker', rule, {
             code: 'var source = \'Добрый день, как ваши дела?\' // Комментарий',
             options:[
                 {
-                    lang: { strings: 'ru_RU', comments: 'ru_RU', templates: 'ru_RU' }
+                    lang: { strings: 'ru_RU', comments: 'ru_RU', templates: 'ru_RU', identifiers: 'en_US' }
                 }
             ]
         },
@@ -177,13 +177,14 @@ ruleTester.run('spellcheck/spell-checker', rule, {
                 { message: 'You have a misspelled word: webpack on String'}]
         },
         {
-            code: 'var source = \'Дбрый день, как ваши дшла?\' // Комментарий',
+            code: 'var souuurce = \'Дбрый день, как ваши дшла?\' // Комментарий',
             options:[
                 {
-                    lang: { strings: 'ru_RU', comments: 'ru_RU', templates: 'ru_RU' }
+                    lang: { strings: 'ru_RU', comments: 'ru_RU', templates: 'ru_RU', identifiers: 'en_US' }
                 }
             ],
             errors: [
+                { message: 'You have a misspelled word: souuurce on Identifier'},
                 { message: 'You have a misspelled word: Дбрый on String'},
                 { message: 'You have a misspelled word: дшла on String'},
             ]

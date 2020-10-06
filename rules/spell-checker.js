@@ -13,6 +13,10 @@ function getGloabalsSkipsWords() {
     });
 }
 
+function makeRegexpFilter(symbols) {
+    return new RegExp('(\\\\[sSwdDB0nfrtv])|\\\\[0-7][0-7][0-7]|\\\\x[0-9A-F][0-9A-F]|\\\\u[0-9A-F][0-9A-F][0-9A-F][0-9A-F]|[^0-9' + symbols + ' \']', 'g') 
+}
+
 var spells = {},
     dictionaries = {},
     skipWords = lodash.union(
@@ -28,7 +32,16 @@ var spells = {},
         Template: 'templates',
         Identifier: 'identifiers',
     },
-    defaultLanguage = 'en_US';
+    defaultLanguage = 'en_US',
+    enSymbols = 'a-zA-Z',
+    ruSymbols = 'а-яА-ЯёЁ',
+    langRegexpFilter = {
+        'en_US': makeRegexpFilter(enSymbols),
+        'en_GB': makeRegexpFilter(enSymbols),
+        'en_AU': makeRegexpFilter(enSymbols),
+        'en_CA': makeRegexpFilter(enSymbols),
+        'ru_RU': makeRegexpFilter(ruSymbols)
+    };
 
 // ESLint 3 had "eslint.version" in context. ESLint 4 does not have one.
 function isEslint4OrAbove(context) {
@@ -200,10 +213,10 @@ module.exports = {
         function checkSpelling(aNode, value, spellingType) {
             if(!hasToSkip(value)) {
                 // Regular expression matches regexp metacharacters, and any special char
-                var regexp = /(\\[sSwdDB0nfrtv])|\\[0-7][0-7][0-7]|\\x[0-9A-F][0-9A-F]|\\u[0-9A-F][0-9A-F][0-9A-F][0-9A-F]|[^0-9a-zA-Zа-яА-ЯёЁ ']/g,
+                var spellingTypeLang = lang[spellingTypeMap[spellingType]],
+                    regexp = langRegexpFilter[spellingTypeLang], // /(\\[sSwdDB0nfrtv])|\\[0-7][0-7][0-7]|\\x[0-9A-F][0-9A-F]|\\u[0-9A-F][0-9A-F][0-9A-F][0-9A-F]|[^0-9a-zA-Zа-яА-ЯёЁ ']/g,
                     nodeWords = value.replace(regexp, ' ')
                         .replace(/([A-Z])/g, ' $1').split(' '),
-                    spellingTypeLang = lang[spellingTypeMap[spellingType]],
                     spell = spells[spellingTypeLang],
                     isSpellingError = makeIsSpellingError(spell),
                     errors;
