@@ -35,12 +35,20 @@ var spells = {},
     defaultLanguage = 'en_US',
     enSymbols = 'a-zA-Z',
     ruSymbols = 'а-яА-ЯёЁ',
+    capitalEnSymbolsRegexp = /([A-Z])/g,
+    enRegexpFilter = {
+        all: makeRegexpFilter(enSymbols),
+        capital: capitalEnSymbolsRegexp
+    },
     langRegexpFilter = {
-        'en_US': makeRegexpFilter(enSymbols),
-        'en_GB': makeRegexpFilter(enSymbols),
-        'en_AU': makeRegexpFilter(enSymbols),
-        'en_CA': makeRegexpFilter(enSymbols),
-        'ru_RU': makeRegexpFilter(ruSymbols)
+        'en_US': enRegexpFilter,
+        'en_GB': enRegexpFilter,
+        'en_AU': enRegexpFilter,
+        'en_CA': enRegexpFilter,
+        'ru_RU': {
+            all: makeRegexpFilter(ruSymbols),
+            capital: /([А-ЯЁ])/g,
+        }
     };
 
 // ESLint 3 had "eslint.version" in context. ESLint 4 does not have one.
@@ -214,9 +222,10 @@ module.exports = {
             if(!hasToSkip(value)) {
                 // Regular expression matches regexp metacharacters, and any special char
                 var spellingTypeLang = lang[spellingTypeMap[spellingType]],
-                    regexp = langRegexpFilter[spellingTypeLang],
+                    regexp = langRegexpFilter[spellingTypeLang].all,
+                    capitalRegexp = langRegexpFilter[spellingTypeLang].capital,
                     nodeWords = value.replace(regexp, ' ')
-                        .replace(/([A-Z])/g, ' $1').split(' '),
+                        .replace(capitalRegexp, ' $1').split(' '),
                     spell = spells[spellingTypeLang],
                     isSpellingError = makeIsSpellingError(spell),
                     errors;
@@ -226,7 +235,7 @@ module.exports = {
                     .filter(function(aWord) {
                       // Split words by numbers for special cases such as test12anything78variable and to include 2nd and 3rd ordinals
                       // also for Proper names we convert to lower case in second pass.
-                        var splitByNumberWords = aWord.replace(/[0-9']/g, ' ').replace(/([A-Z])/g, ' $1').toLowerCase().split(' ');
+                        var splitByNumberWords = aWord.replace(/[0-9']/g, ' ').replace(capitalRegexp, ' $1').toLowerCase().split(' ');
                         return splitByNumberWords.some(isSpellingError);
                     })
                     .forEach(function(aWord) {

@@ -74,6 +74,15 @@ ruleTester.run('spellcheck/spell-checker', rule, {
                 }
             ]
         },
+        {
+            code: 'var source = \'ПВТ2\' // с2б ',
+            options:[
+                {
+                    lang: { strings: 'ru_RU', comments: 'ru_RU', templates: 'ru_RU', identifiers: 'en_US' },
+                    minLength: 3
+                }
+            ]
+        },
     ],
     invalid: [
         {
