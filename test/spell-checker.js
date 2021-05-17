@@ -66,6 +66,23 @@ ruleTester.run('spellcheck/spell-checker', rule, {
             code: 'var source = \'<div className="video-img">\'',
             options:[{skipIfMatch:['=".*"']}]
         },
+        {
+            code: 'var source = \'Добрый день, как ваши дела?\' // Комментарий',
+            options:[
+                {
+                    lang: { strings: 'ru_RU', comments: 'ru_RU', templates: 'ru_RU', identifiers: 'en_US' }
+                }
+            ]
+        },
+        {
+            code: 'var source = \'ПВТ2\' // с2б ',
+            options:[
+                {
+                    lang: { strings: 'ru_RU', comments: 'ru_RU', templates: 'ru_RU', identifiers: 'en_US' },
+                    minLength: 3
+                }
+            ]
+        },
     ],
     invalid: [
         {
@@ -167,6 +184,19 @@ ruleTester.run('spellcheck/spell-checker', rule, {
             options:[{ignoreRequire:false}],
             errors: [
                 { message: 'You have a misspelled word: webpack on String'}]
+        },
+        {
+            code: 'var souuurce = \'Дбрый день, как ваши дшла?\' // Комментарий',
+            options:[
+                {
+                    lang: { strings: 'ru_RU', comments: 'ru_RU', templates: 'ru_RU', identifiers: 'en_US' }
+                }
+            ],
+            errors: [
+                { message: 'You have a misspelled word: souuurce on Identifier'},
+                { message: 'You have a misspelled word: Дбрый on String'},
+                { message: 'You have a misspelled word: дшла on String'},
+            ]
         }
     ]
 });

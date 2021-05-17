@@ -10,7 +10,7 @@
 			.pipe(istanbul.hookRequire()) // Force `require` to return covered files
 			.on('finish', function () {
 				gulp.src(['test/*.js', '!test/performance.js'])
-					.pipe(mocha())
+					.pipe(mocha({ timeout: 100000 }))
 					.pipe(istanbul.writeReports()) // Creating the reports after tests runned
 					.on('end', cb);
 		});
