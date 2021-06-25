@@ -1,5 +1,6 @@
 // Native modules
 var fs = require('fs');
+var path = require('path');
 
 // 3rd party dependencies
 var lodash = require('lodash'),
@@ -80,6 +81,10 @@ module.exports = {
                         type: 'string',
                         default: 'en_US'
                     },
+                    langDir: {
+                        type: 'string',
+                        default: defaultSettings.langDir
+                    },
                     skipWords: {
                         type: 'array',
                         default: [
@@ -119,6 +124,7 @@ module.exports = {
 
         'use strict';
         var defaultOptions = {
+            langDir: defaultSettings.langDir,
             comments: true,
             strings: true,
             identifiers: true,
@@ -146,8 +152,8 @@ module.exports = {
 
         function initializeDictionary(language) {
             dictionary = spell.parse({
-                aff: fs.readFileSync(__dirname + '/utils/dicts/' + language + '.aff'),
-                dic: fs.readFileSync(__dirname + '/utils/dicts/' + language + '.dic')
+                aff: fs.readFileSync(path.join(options.langDir, language + '.aff')),
+                dic: fs.readFileSync(path.join(options.langDir, language + '.dic'))
             });
 
             spell.use(dictionary);
