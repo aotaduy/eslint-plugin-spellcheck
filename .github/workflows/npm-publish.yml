@@ -12,12 +12,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          ref: master
       - uses: actions/setup-node@v2
         with:
           node-version: 12
       - run: git config --global user.email "aotaduy@users.noreply.github.com"
       - run: git config --global user.name "Andres Otaduy"
-      - run: git checkout master
       - run: npm ci
       - run: npm test
       - run: npm version patch
