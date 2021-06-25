@@ -1,8 +1,7 @@
 # eslint-plugin-spellcheck
 [eslint](http://eslint.org) plugin to spell check words on identifiers, Strings and comments of javascript files.
 [![dependencies Status](https://david-dm.org/aotaduy/eslint-plugin-spellcheck/status.svg)](https://david-dm.org/aotaduy/eslint-plugin-spellcheck)
-[![Build Status](https://travis-ci.org/aotaduy/eslint-plugin-spellcheck.svg?branch=master)](https://travis-ci.org/aotaduy/eslint-plugin-spellcheck)
-
+[![Build CI](https://github.com/aotaduy/eslint-plugin-spellcheck/actions/workflows/node.js.yml/badge.svg)](https://github.com/aotaduy/eslint-plugin-spellcheck/actions/workflows/node.js.yml)
 ## Usage in a project
 
 1. Install `eslint-plugin-spellcheck` as a dev-dependency:
