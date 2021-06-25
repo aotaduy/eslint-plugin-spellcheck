@@ -35,3 +35,4 @@ node_modules
 #project files
 .idea
 coverage
+.nyc_output

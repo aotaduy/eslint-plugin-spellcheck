@@ -43,6 +43,7 @@ ruleTester.run('spellcheck/spell-checker', rule, {
         'var a = JSON.stringify({})',
         'var url = "http://examplus.com"',
         'var a = Math.trunc(-0.1)',
+        'var a = "test", test = `${a}`;',
         {
             code: 'var a = 1 // This is a comment',
             options: [{lang: 'sym', langDir: __dirname}]
@@ -70,6 +71,10 @@ ruleTester.run('spellcheck/spell-checker', rule, {
             code: 'var source = \'<div className="video-img">\'',
             options:[{skipIfMatch:['=".*"']}]
         },
+        {
+            code: 'var a = "test", test = `noooot`;',
+            options: [{templates: false}],
+        }
     ],
     invalid: [
         {
@@ -171,6 +176,14 @@ ruleTester.run('spellcheck/spell-checker', rule, {
             options:[{ignoreRequire:false}],
             errors: [
                 { message: 'You have a misspelled word: webpack on String'}]
-        }
+        },
+        {
+            code: 'var a = "test", test = `noooot`;',
+            options:[{templates: true}],
+            errors: [
+                { message: 'You have a misspelled word: noooot on Template'}]
+        },
+
+
     ]
 });

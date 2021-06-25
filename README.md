@@ -39,6 +39,7 @@
                "comments": true,
                "strings": true,
                "identifiers": true,
+               "templates": true,
                "lang": "en_US",
                "skipWords": [
                    "dict",
@@ -49,10 +50,10 @@
                ],
                "skipIfMatch": [
                    "http://[^s]*",
-                   "^[-\\w]+\/[-\\w\\.]+$" //For MIME Types
+                   "^[-\\w]+\/[-\\w\\.]+$"
                ],
                "skipWordIfMatch": [
-                   "^foobar.*$" // words that begin with foobar will not be checked
+                   "^foobar.*$"
                ],
                "minLength": 3
             }
