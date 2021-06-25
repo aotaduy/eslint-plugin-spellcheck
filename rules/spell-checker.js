@@ -16,13 +16,16 @@ function getGloabalsSkipsWords() {
 var spell = new Spellchecker(),
     dictionary = null,
     dictionaryLang,
-    skipWords = lodash.union(
+    globalSkipWords = lodash.union(
         ...getGloabalsSkipsWords(),
         defaultSettings.skipWords,
         Object.getOwnPropertyNames(String.prototype),
         Object.getOwnPropertyNames(JSON),
         Object.getOwnPropertyNames(Math)
-    );
+    ),
+    globalSkipWordsSet = new Set(globalSkipWords.map(function (string) {
+        return string.toLowerCase();
+    }));
 
 
 // ESLint 3 had "eslint.version" in context. ESLint 4 does not have one.
@@ -137,10 +140,9 @@ module.exports = {
             initializeDictionary(lang);
         }
 
-        options.skipWords = new Set(lodash.union(options.skipWords, skipWords)
-            .map(function (string) {
-                return string.toLowerCase();
-            }));
+        options.skipWords = new Set(options.skipWords.map(function (string) {
+            return string.toLowerCase();
+        }));
 
         options.skipIfMatch = lodash.union(options.skipIfMatch, defaultSettings.skipIfMatch);
 
@@ -153,8 +155,12 @@ module.exports = {
             spell.use(dictionary);
         }
 
+        function hasValueInSkipWords(value) {
+            return options.skipWords.has(value) || globalSkipWordsSet.has(value);
+        }
+
         function isSpellingError(aWord) {
-            return !options.skipWords.has(aWord) && !spell.check(aWord);
+            return !hasValueInSkipWords(aWord) && !spell.check(aWord);
         }
 
         function checkSpelling(aNode, value, spellingType) {
@@ -214,14 +220,18 @@ module.exports = {
                 checkSpelling(aNode, aNode.name, 'Identifier');
             }
         }
+
         /* Returns true if the string in value has to be skipped for spell checking */
         function hasToSkip(value) {
-            return options.skipWords.has(value) ||
-                lodash.find(options.skipIfMatch, function (aPattern) {
-                    return value.match(aPattern);
-                });
-        }
+            if (hasValueInSkipWords(value))
+                return true;
 
+            const escapedValue = value.replace(/'/g, '\\\'');
+
+            return lodash.find(options.skipIfMatch, function (aPattern) {
+                return escapedValue.match(aPattern);
+            });
+        }
 
         /**
          * returns false if the word has to be skipped
@@ -229,12 +239,16 @@ module.exports = {
          * @return {Boolean} false if skip; true if not
          */
         function hasToSkipWord(word) {
-            if(word.length < options.minLength) return false;
-            if(lodash.find(options.skipWordIfMatch, function (aPattern) {
-                return word.match(aPattern);
-            })){
-                return false;
+            if (word.length < options.minLength) return false;
+
+            if (options.skipWordIfMatch) {
+                const escapedWord = word.replace(/'/g, '\\\'');
+
+                return !lodash.find(options.skipWordIfMatch, function (aPattern) {
+                    return escapedWord.match(aPattern);
+                });
             }
+
             return true;
         }
 
