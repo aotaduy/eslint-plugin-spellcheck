@@ -20,6 +20,7 @@ jobs:
       - run: git config --global user.email "aotaduy@users.noreply.github.com"
       - run: git config --global user.name "Andres Otaduy"
       - run: npm ci
+      - run: npm run lint
       - run: npm test
       - run: npm version patch
       - run: git push
