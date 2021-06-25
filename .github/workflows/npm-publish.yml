@@ -17,8 +17,10 @@ jobs:
           node-version: 12
       - run: npm ci
       - run: npm test
-      - name: Update version in package.json
-        uses: maks-stupak/gh-action-bump-version@v7.1.5
+      - run: git config --global user.email "aotaduy@users.noreply.github.com"
+      - run: git config --global user.name "Andres Otaduy"
+      - run: npm version patch
+      - run: git push
 
 
   publish-npm:
