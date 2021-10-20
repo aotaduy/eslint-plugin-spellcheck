@@ -1,4 +1,5 @@
 module.exports = {
+    langDir: __dirname + '/utils/dicts',
     skipWords: [
         // own names
         // gulp plugin names, node package names etc.
