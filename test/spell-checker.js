@@ -44,6 +44,16 @@ ruleTester.run('spellcheck/spell-checker', rule, {
         'var url = "http://examplus.com"',
         'var a = Math.trunc(-0.1)',
         'var a = "test", test = `${a}`;',
+        'var a = "ADD_SUM";',
+        'const SEARCH_CONDITIONS_LIMIT = 9;',
+        {
+            code: 'var a = "ADD_SMU"',
+            options:[{ ignoreUpperCaseUnderscore: true }]
+        },
+        {
+            code: 'const SEACH_CONDITIONS_LIMIT = 9;',
+            options:[{ ignoreUpperCaseUnderscore: true }]
+        },
         {
             code: 'var a = 1 // This is a comment',
             options: [{lang: 'sym', langDir: __dirname}]
@@ -183,7 +193,15 @@ ruleTester.run('spellcheck/spell-checker', rule, {
             errors: [
                 { message: 'You have a misspelled word: noooot on Template'}]
         },
-
-
+        {
+            code: 'var a = "ADD_SMU"',
+            errors: [
+                { message: 'You have a misspelled word: smu on String'}]
+        },
+        {
+            code: 'const SEACH_CONDITIONS_LIMIT = 9;',
+            errors: [
+                { message: 'You have a misspelled word: seach on Identifier'}]
+        },
     ]
 });
