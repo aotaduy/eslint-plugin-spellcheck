@@ -77,7 +77,7 @@ Check Spelling inside identifiers
 "ignoreRequire": <<Boolean>>, default: false
 Exclude `require()` imports from spell-checking. Useful for excluding NPM package name false-positives.
 
-"ignoreUpperCaseUnderscore": <<Boolean>>, default: false
+"enableUpperCaseUnderscoreCheck": <<Boolean>>, default: false
 Exclude checking uppercase words separated by an underscore. e.g., `SEARCH_CONDITIONS_LIMIT`
 
 "templates": <<Boolean>>, default: true

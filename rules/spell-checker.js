@@ -73,7 +73,7 @@ module.exports = {
                         type: 'boolean',
                         default: false
                     },
-                    ignoreUpperCaseUnderscore: {
+                    enableUpperCaseUnderscoreCheck: {
                         type: 'boolean',
                         default: false
                     },
@@ -202,13 +202,12 @@ module.exports = {
         }
 
         function underscoreParser(aNode, value, spellingType) {
-            if (options.ignoreUpperCaseUnderscore) {
+            if (!options.enableUpperCaseUnderscoreCheck) {
                 checkSpelling(aNode, value, spellingType);
             } else {
-                const hasUnderscore = value.split('_').length > 1;
                 const splitValues = value.split('_');
                 splitValues.forEach((word) => {
-                    checkSpelling(aNode, hasUnderscore ? word.toLowerCase() : word, spellingType);
+                    checkSpelling(aNode, word.toLowerCase(), spellingType);
                 })
             }
         }

@@ -15,10 +15,10 @@ var ruleTester = new RuleTester({
     },
 
     parserOptions: {
-      "ecmaVersion": 2018,
-      "sourceType": "module",
+      'ecmaVersion': 2018,
+      'sourceType': 'module',
         ecmaFeatures: {
-            "modules": true
+            'modules': true
         }
     }
 });
@@ -45,15 +45,13 @@ ruleTester.run('spellcheck/spell-checker', rule, {
         'var a = Math.trunc(-0.1)',
         'var a = "test", test = `${a}`;',
         'var a = "ADD_SUM";',
+        'var a = "ADD_SMU";',
         'const SEARCH_CONDITIONS_LIMIT = 9;',
-        {
-            code: 'var a = "ADD_SMU"',
-            options:[{ ignoreUpperCaseUnderscore: true }]
-        },
-        {
-            code: 'const SEACH_CONDITIONS_LIMIT = 9;',
-            options:[{ ignoreUpperCaseUnderscore: true }]
-        },
+        'const SEACH_CONDITIONS_LIMIT = 9;',
+        'const KEY = "HELLO_WORLD";',
+        'const KEY = "HELLO_WORDL";',
+        'const PASSWORD = "123456";',
+        'const PASSWROD = "123456";',
         {
             code: 'var a = 1 // This is a comment',
             options: [{lang: 'sym', langDir: __dirname}]
@@ -195,13 +193,27 @@ ruleTester.run('spellcheck/spell-checker', rule, {
         },
         {
             code: 'var a = "ADD_SMU"',
+            options:[{ enableUpperCaseUnderscoreCheck: true }],
             errors: [
                 { message: 'You have a misspelled word: smu on String'}]
         },
         {
             code: 'const SEACH_CONDITIONS_LIMIT = 9;',
+            options:[{ enableUpperCaseUnderscoreCheck: true }],
             errors: [
                 { message: 'You have a misspelled word: seach on Identifier'}]
+        },
+        {
+            code: 'const KEY = "HELLO_WORDL";',
+            options:[{ enableUpperCaseUnderscoreCheck: true }],
+            errors: [
+                { message: 'You have a misspelled word: wordl on String'}]
+        },
+        {
+            code: 'const PASSWROD = "123456";',
+            options:[{ enableUpperCaseUnderscoreCheck: true }],
+            errors: [
+                { message: 'You have a misspelled word: passwrod on Identifier'}]
         },
     ]
 });
