@@ -73,6 +73,10 @@ module.exports = {
                         type: 'boolean',
                         default: false
                     },
+                    enableUpperCaseUnderscoreCheck: {
+                        type: 'boolean',
+                        default: false
+                    },
                     templates: {
                         type: 'boolean',
                         default: true
@@ -111,7 +115,6 @@ module.exports = {
                 additionalProperties: false
             }
         ]
-
     },
 
     // create (function) returns an object with methods that ESLint calls to “visit” nodes while traversing the abstract syntax tree (AST as defined by ESTree) of JavaScript code:
@@ -164,31 +167,31 @@ module.exports = {
         }
 
         function checkSpelling(aNode, value, spellingType) {
-            if(!hasToSkip(value)) {
+            if (!hasToSkip(value)) {
                 // Regular expression matches regexp metacharacters, and any special char
                 var regexp = /(\\[sSwdDB0nfrtv])|\\[0-7][0-7][0-7]|\\x[0-9A-F][0-9A-F]|\\u[0-9A-F][0-9A-F][0-9A-F][0-9A-F]|[^0-9a-zA-Z '’]/g,
                     nodeWords = value.replace(regexp, ' ')
-                        .replace(/([A-Z])/g, ' $1').split(' '),
+                    .replace(/([A-Z])/g, ' $1').split(' '),
                     errors;
                 errors = nodeWords
                     .filter(hasToSkipWord)
                     .filter(isSpellingError)
-                    .filter(function(aWord) {
-                      // Split words by numbers for special cases such as test12anything78variable and to include 2nd and 3rd ordinals
-                      // also for Proper names we convert to lower case in second pass.
+                    .filter(function (aWord) {
+                        // Split words by numbers for special cases such as test12anything78variable and to include 2nd and 3rd ordinals
+                        // also for Proper names we convert to lower case in second pass.
                         var splitByNumberWords = aWord.replace(/[0-9']/g, ' ').replace(/([A-Z])/g, ' $1').toLowerCase().split(' ');
                         return splitByNumberWords.some(isSpellingError);
                     })
-                    .forEach(function(aWord) {
+                    .forEach(function (aWord) {
                         context.report(
                             aNode,
                             'You have a misspelled word: {{word}} on {{spellingType}}', {
-                              word: aWord,
-                              spellingType: spellingType
-                        });
+                                word: aWord,
+                                spellingType: spellingType
+                            });
                     });
-                }
             }
+        }
 
         function isInImportDeclaration(aNode) {
             // @see https://buildmedia.readthedocs.org/media/pdf/esprima/latest/esprima.pdf
@@ -198,26 +201,38 @@ module.exports = {
             );
         }
 
-        function checkComment(aNode) {
-            if(options.comments) {
-                checkSpelling(aNode, aNode.value, 'Comment');
+        function underscoreParser(aNode, value, spellingType) {
+            if (!options.enableUpperCaseUnderscoreCheck) {
+                checkSpelling(aNode, value, spellingType);
+            } else {
+                const splitValues = value.split('_');
+                splitValues.forEach((word) => {
+                    checkSpelling(aNode, word.toLowerCase(), spellingType);
+                })
             }
         }
 
-        function checkLiteral(aNode){
-            if(options.strings && typeof aNode.value === 'string' && !isInImportDeclaration(aNode)) {
-                checkSpelling(aNode, aNode.value, 'String');
+        function checkComment(aNode) {
+            if (options.comments) {
+                underscoreParser(aNode, aNode.value, 'Comment');
             }
         }
-        function checkTemplateElement(aNode){
-            if(options.templates && typeof aNode.value.raw === 'string' && !isInImportDeclaration(aNode)) {
-                checkSpelling(aNode, aNode.value.raw, 'Template');
+
+        function checkLiteral(aNode) {
+            if (options.strings && typeof aNode.value === 'string' && !isInImportDeclaration(aNode)) {
+                underscoreParser(aNode, aNode.value, 'String');
+            }
+        }
+
+        function checkTemplateElement(aNode) {
+            if (options.templates && typeof aNode.value.raw === 'string' && !isInImportDeclaration(aNode)) {
+                underscoreParser(aNode, aNode.value.raw, 'Template');
             }
         }
 
         function checkIdentifier(aNode) {
-            if(options.identifiers) {
-                checkSpelling(aNode, aNode.name, 'Identifier');
+            if (options.identifiers) {
+                underscoreParser(aNode, aNode.name, 'Identifier');
             }
         }
         /* Returns true if the string in value has to be skipped for spell checking */
