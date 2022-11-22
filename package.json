@@ -29,7 +29,7 @@
     "istanbul": "^0.4.4",
     "mocha": "^6.1.4",
     "nyc": "^15.1.0",
-    "shelljs": "^0.7.3",
+    "shelljs": "^0.8.5",
     "shelljs-nodecli": "^0.1.1"
   },
   "peerDependencies": {
