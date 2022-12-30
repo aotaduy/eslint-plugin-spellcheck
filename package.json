@@ -27,7 +27,7 @@
     "coveralls": "^3.0.5",
     "eslint": ">4.18.2",
     "istanbul": "^0.4.4",
-    "mocha": "^6.1.4",
+    "mocha": "^10.2.0",
     "nyc": "^15.1.0",
     "shelljs": "^0.7.3",
     "shelljs-nodecli": "^0.1.1"
